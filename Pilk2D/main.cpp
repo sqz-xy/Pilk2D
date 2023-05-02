@@ -261,11 +261,10 @@ int main()
     glm::mat4 trans = glm::translate(identity, pos);
 
     // View
-    glm::vec3 camPos(0.0f, 0.0f, 1.0f);
-    glm::vec3 target = camPos;
-    camPos.z = 0;
+    glm::vec3 camPos(0.0f, 0.0f, -1.0f);
+    glm::mat4 view = glm::lookAt(camPos, camPos + glm::vec3(0, 0, 1.0f), glm::vec3(0, 1, 0));
 
-    glm::mat4 view = glm::lookAt(camPos, target, glm::vec3(0, 1, 0));
+    // cam pos is -1.0f, looking at 1.0f
 
     // Simple update loop
     while (!glfwWindowShouldClose(window))
@@ -299,15 +298,12 @@ int main()
         glUniform4f(glGetUniformLocation(shaderProgram, "uColour"), colour[0], colour[1], colour[2], colour[3]);
 
         // Translate
-        //pos.x += 0.01f;
-        //trans = glm::translate(identity, pos);
+        pos.x -= 0.011f;
+        trans = glm::translate(identity, pos);
 
         // MoveCam
-        camPos.x += 1.0f;
-        target = camPos;
-        camPos.z = 0;
-
-        glm::mat4 view = glm::lookAt(camPos, target, glm::vec3(0, 1, 0));
+        camPos.x += 0.01f;
+        view = glm::lookAt(camPos, camPos + glm::vec3(0, 0, 1.0f), glm::vec3(0, 1, 0));
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
