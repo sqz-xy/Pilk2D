@@ -1,5 +1,6 @@
 #pragma once
-#include "PilkEngineCommon.h"
+
+#include <chrono>
 
 /// <summary>
 /// Original Author: Thomas Beet, followed tutorial at: https://www.youtube.com/watch?v=9kEBbKIsmz0

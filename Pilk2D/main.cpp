@@ -10,6 +10,11 @@
 #include "stb_image.h"
 #include "irrKlang.h"
 
+#include "glm.hpp"
+#include "gtc/matrix_transform.hpp"
+#include "gtc/type_ptr.hpp"
+
+#include <filesystem>
 #include <iostream>
 #include <ostream>
 #include <fstream>
@@ -154,42 +159,89 @@ int main()
     // Resize callback
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    float vertices[] =
-    {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f,  0.5f, 0.0f
-    };
-
-    float indices[] =
-    {
-            0, 1, 2
-    };
-
     float colour[4] = { 1.0f, 0.5f, 0.2f, 1.0f };
+    float vertices[] = {
+        // positions          // normals          // texture coords
+         0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   1.0f, 1.0f, // top right
+         0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+        -0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 1.0f  // top left 
+    };
+
+    unsigned int indices[] = {
+        0, 1, 3, // first triangle
+        1, 2, 3  // second triangle
+    };
 
     unsigned int VBO, VAO, EBO;
+    glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
+
+    glBindVertexArray(VAO);
+
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glGenVertexArrays(1, &VAO);
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    // normal attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    // texture coord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+    glBindVertexArray(0);
 
     // Creates a shader program
     unsigned int vertexShader, fragmentShader, shaderProgram;
     if (!create_shader_program(&vertexShader, &fragmentShader, &shaderProgram)) return -1;
 
-    // Buffer Data
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    // load and create a texture 
+    // -------------------------
+    unsigned int texture1, texture2;
+    // texture 1
+    // ---------
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
+    unsigned char* data = stbi_load("resources/textures/capsule.jpg", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        GLenum format;
+        if (nrChannels == 1)
+            format = GL_RED;
+        else if (nrChannels == 3)
+            format = GL_RGB;
+        else if (nrChannels == 4)
+            format = GL_RGBA;
 
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+
+    
 
     // ImGUI Init
     IMGUI_CHECKVERSION();
@@ -198,6 +250,22 @@ int main()
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
+
+    // Proj
+    float aspect = (float)width / height;
+    glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, 1.0f, -1.0f);
+    
+    // Model
+    glm::mat4 identity(1.0f);
+    glm::vec3 pos(0.1f, 0.1f, 1.0f);
+    glm::mat4 trans = glm::translate(identity, pos);
+
+    // View
+    glm::vec3 camPos(0.0f, 0.0f, 1.0f);
+    glm::vec3 target = camPos;
+    camPos.z = 0;
+
+    glm::mat4 view = glm::lookAt(camPos, target, glm::vec3(0, 1, 0));
 
     // Simple update loop
     while (!glfwWindowShouldClose(window))
@@ -217,13 +285,33 @@ int main()
         // Rendering commands here
         // ...
 
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+
         glUseProgram(shaderProgram);
 
         // Modify shader uniforms
+
+        glUniform1i(glGetUniformLocation(shaderProgram, "uDiffuse"), 0);
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "uModel"), 1, GL_FALSE, &(trans)[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "uProjection"), 1, GL_FALSE, &(proj)[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "uView"), 1, GL_FALSE, &(view)[0][0]);
         glUniform4f(glGetUniformLocation(shaderProgram, "uColour"), colour[0], colour[1], colour[2], colour[3]);
 
+        // Translate
+        //pos.x += 0.01f;
+        //trans = glm::translate(identity, pos);
+
+        // MoveCam
+        camPos.x += 1.0f;
+        target = camPos;
+        camPos.z = 0;
+
+        glm::mat4 view = glm::lookAt(camPos, target, glm::vec3(0, 1, 0));
+
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
 
         // UI drawing
         ImGui::Begin("ImGui Test");
