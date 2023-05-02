@@ -261,6 +261,7 @@ int main()
     glm::vec3 pos(0.1f, 0.1f, 0.9f);
     glm::mat4 trans = glm::translate(identity, pos);
 
+    // http://www.songho.ca/opengl/gl_projectionmatrix.html FOR Z REF
     glm::vec3 pos2(0.2f, 0.1f, 1.0f);
     glm::mat4 trans2 = glm::translate(identity, pos2);
 
