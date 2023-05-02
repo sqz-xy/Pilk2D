@@ -241,8 +241,6 @@ int main()
     }
     stbi_image_free(data);
 
-    
-
     // ImGUI Init
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -251,14 +249,20 @@ int main()
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
+
+    glEnable(GL_DEPTH_TEST);
+
     // Proj
     float aspect = (float)width / height;
-    glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, 1.0f, -1.0f);
+    glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, 10.0f, -10.0f);
     
     // Model
     glm::mat4 identity(1.0f);
-    glm::vec3 pos(0.1f, 0.1f, 1.0f);
+    glm::vec3 pos(0.1f, 0.1f, 0.9f);
     glm::mat4 trans = glm::translate(identity, pos);
+
+    glm::vec3 pos2(0.2f, 0.1f, 1.0f);
+    glm::mat4 trans2 = glm::translate(identity, pos2);
 
     // View
     glm::vec3 camPos(0.0f, 0.0f, -1.0f);
@@ -272,6 +276,7 @@ int main()
         // Clear colour
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_DEPTH_BUFFER_BIT);
 
         // ImGui frame init
         ImGui_ImplOpenGL3_NewFrame();
@@ -298,12 +303,18 @@ int main()
         glUniform4f(glGetUniformLocation(shaderProgram, "uColour"), colour[0], colour[1], colour[2], colour[3]);
 
         // Translate
-        pos.x -= 0.011f;
-        trans = glm::translate(identity, pos);
+        //pos.x -= 0.01f;
+        //trans = glm::translate(identity, pos);
 
         // MoveCam
-        camPos.x += 0.01f;
-        view = glm::lookAt(camPos, camPos + glm::vec3(0, 0, 1.0f), glm::vec3(0, 1, 0));
+        //camPos.x += 0.01f;
+        //view = glm::lookAt(camPos, camPos + glm::vec3(0, 0, 1.0f), glm::vec3(0, 1, 0));
+
+        glBindVertexArray(VAO);
+        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "uModel"), 1, GL_FALSE, &(trans2)[0][0]);
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
