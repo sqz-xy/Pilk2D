@@ -4,13 +4,14 @@
 
 struct GLFWwindow;
 class Scene;
+enum SceneType;
 
 class SceneManager
 {
 public:
 	static void Initialise(const int pWidth, const int pHeight, std::string& pWindowName);
 	static void Run();
-	static void ChangeScene();
+	static void ChangeScene(SceneType pSceneType);
 
 	// Static game variables, across the program
 	static int Width;

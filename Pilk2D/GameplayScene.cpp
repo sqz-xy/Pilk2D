@@ -2,15 +2,15 @@
 #include "SceneManager.h"
 #include <glfw3.h>
 
-class MainMenuScene : public Scene
+class GameplayScene : public Scene
 {
 public:
-	explicit MainMenuScene() : Scene()
-	{ 
-		SceneManager::WindowName = "Main Menu!";
+	explicit GameplayScene() : Scene()
+	{
+		SceneManager::WindowName = "Gameplay!";
 	}
 
-	~MainMenuScene() override
+	~GameplayScene() override
 	{
 		this->Close();
 	}
@@ -32,8 +32,8 @@ public:
 
 	void ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods) override
 	{
-		if (pKey == GLFW_KEY_Q && pAction == GLFW_PRESS)
-			SceneManager::ChangeScene(Gameplay);
+		if (pKey == GLFW_KEY_E && pAction == GLFW_PRESS)
+			SceneManager::ChangeScene(MainMenu);
 	}
 
 	void ProcessMouseInput(GLFWwindow* pWindow, double pXPos, double pYPos) override

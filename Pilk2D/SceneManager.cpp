@@ -6,6 +6,7 @@
 
 #include "Scene.h"
 #include "MainMenuScene.cpp"
+#include "GameplayScene.cpp"
 
 void SceneManager::Initialise(const int pWidth, const int pHeight, std::string& pWindowName)
 {
@@ -83,9 +84,18 @@ void SceneManager::Run()
     }
 }
 
-void SceneManager::ChangeScene()
+void SceneManager::ChangeScene(SceneType pSceneType)
 {
-
+    switch (pSceneType)
+    {
+        case MainMenu:
+            mCurrentScene = new MainMenuScene();
+            break;
+        case Gameplay:
+            mCurrentScene = new GameplayScene();
+            break;
+    }
+    Load();
 }
 
 void SceneManager::Render()

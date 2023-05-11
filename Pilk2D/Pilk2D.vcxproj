@@ -147,6 +147,7 @@ xcopy "$(ProjectDir)resources" "$(TargetDir)resources" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameplayScene.cpp" />
     <ClCompile Include="glad.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
