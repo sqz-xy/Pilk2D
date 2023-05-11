@@ -20,6 +20,8 @@
 #include <fstream>
 #include <string>
 
+#include "SceneManager.h"
+
  /**
   * \brief Prototype for viewport adjusting
   * \param window The current window
@@ -129,6 +131,14 @@ bool create_shader_program(unsigned int* pVertexShader, unsigned int* pFragmentS
  */
 int main()
 {
+
+    //TODO: Handle scene changes.
+
+    std::string windowName = "Balls";
+    SceneManager::Initialise(800, 600, windowName);
+    SceneManager::Run();
+
+    /*
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
@@ -159,7 +169,7 @@ int main()
     // Resize callback
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    float colour[4] = { 1.0f, 0.5f, 0.2f, 1.0f };
+    float colour[4] = { 1.0f, 0.5f, 0.2f, 0.0f };
     float vertices[] = {
         // positions          // normals          // texture coords
          0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   1.0f, 1.0f, // top right
@@ -221,7 +231,7 @@ int main()
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
     // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-    unsigned char* data = stbi_load("resources/textures/capsule.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("resources/textures/grass.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         GLenum format;
@@ -302,6 +312,7 @@ int main()
         glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "uProjection"), 1, GL_FALSE, &(proj)[0][0]);
         glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "uView"), 1, GL_FALSE, &(view)[0][0]);
         glUniform4f(glGetUniformLocation(shaderProgram, "uColour"), colour[0], colour[1], colour[2], colour[3]);
+        glUniform1f(glGetUniformLocation(shaderProgram, "uTime"), glfwGetTime());
 
         // Translate
         //pos.x -= 0.01f;
@@ -315,11 +326,12 @@ int main()
         glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "uModel"), 1, GL_FALSE, &(trans2)[0][0]);
+        // Model 2
+        //glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "uModel"), 1, GL_FALSE, &(trans2)[0][0]);
 
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
+        //glBindVertexArray(VAO);
+        //glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
+        //glBindVertexArray(0);
 
         // UI drawing
         ImGui::Begin("ImGui Test");
@@ -347,6 +359,7 @@ int main()
 
     // Delete all resources
     glfwTerminate();
+    */
     return 0;
 }
 
