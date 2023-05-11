@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "SceneManager.h"
+#include "ResourceManager.h"
 #include <glfw3.h>
 
 class GameplayScene : public Scene
@@ -28,6 +29,11 @@ public:
 	void Update() override
 	{
 
+	}
+
+	void Close() override
+	{
+		ResourceManager::DeleteResources();
 	}
 
 	void ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods) override

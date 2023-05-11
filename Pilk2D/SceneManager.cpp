@@ -11,6 +11,8 @@
 void SceneManager::Initialise(const int pWidth, const int pHeight, std::string& pWindowName)
 {
     WindowName = pWindowName;
+    Width = pWidth;
+    Height = pHeight;
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -18,7 +20,7 @@ void SceneManager::Initialise(const int pWidth, const int pHeight, std::string& 
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create the window
-    GLFWwindow* window = glfwCreateWindow(pWidth, pHeight, WindowName.c_str(), NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(Width, Height, WindowName.c_str(), NULL, NULL);
     mWindow = window;
 
     if (mWindow == nullptr)
@@ -38,7 +40,7 @@ void SceneManager::Initialise(const int pWidth, const int pHeight, std::string& 
     }
 
     // Set viewport dimensions
-    glViewport(0, 0, pWidth, pHeight);
+    glViewport(0, 0, Width, Height);
 
     // Callbacks
     glfwSetFramebufferSizeCallback(mWindow, FrameBufferSizeCallback);

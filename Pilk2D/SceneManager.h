@@ -14,8 +14,8 @@ public:
 	static void ChangeScene(SceneType pSceneType);
 
 	// Static game variables, across the program
-	static int Width;
-	static int Height;
+	inline static int Width;
+	inline static int Height;
 	inline static std::string WindowName;
 	inline static float DeltaTime;
 

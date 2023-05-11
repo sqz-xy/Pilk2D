@@ -10,9 +10,3 @@ Scene::Scene()
 }
 
 Scene::~Scene() = default;
-
-
-void Scene::Close()
-{
-
-}

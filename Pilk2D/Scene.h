@@ -15,7 +15,7 @@ public:
 	explicit Scene();
 	virtual ~Scene();
 
-	virtual void Close();
+	virtual void Close() = 0;
 
 	/// <summary>
 	/// Render logic
