@@ -122,7 +122,7 @@ public:
 
 	void Update() override
 	{
-
+		view = glm::lookAt(camPos, camPos + glm::vec3(0, 0, 1.0f), glm::vec3(0, 1, 0));
 	}
 
 	void Close() override
@@ -134,6 +134,12 @@ public:
 	{
 		if (pKey == GLFW_KEY_Q && pAction == GLFW_PRESS)
 			SceneManager::ChangeScene(Gameplay);
+
+		// FIX THIS, MOVEMENT BACKWARDS??
+		if (pKey == GLFW_KEY_D && pAction == GLFW_REPEAT)
+		{
+			camPos.x += 1.0f * SceneManager::DeltaTime;
+		}
 	}
 
 	void ProcessMouseInput(GLFWwindow* pWindow, double pXPos, double pYPos) override
