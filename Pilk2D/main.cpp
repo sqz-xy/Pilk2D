@@ -7,7 +7,7 @@
 int main()
 {
     std::string windowName = "Balls";
-    SceneManager::Initialise(600, 600, windowName);
+    SceneManager::Initialise(800, 600, windowName);
     SceneManager::Run();
     
     return 0;

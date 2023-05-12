@@ -47,8 +47,6 @@ void SceneManager::Initialise(const int pWidth, const int pHeight, std::string& 
     glfwSetKeyCallback(mWindow, KeyboardKeyCallback);
     glfwSetCursorPosCallback(mWindow, CursorPositionCallback);
 
-    // Enable Depth Test
-    glEnable(GL_DEPTH_TEST);
 
     // Init initial main menu scene
     mCurrentScene = new MainMenuScene();
@@ -71,6 +69,9 @@ void SceneManager::Run()
         float now = static_cast<float>(glfwGetTime());
         DeltaTime = now - lastTime;
         lastTime = now;
+
+        // Enable Depth Test
+        glEnable(GL_DEPTH_TEST);
 
         // Clear colour
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

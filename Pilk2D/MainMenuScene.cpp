@@ -28,15 +28,19 @@ public:
 
 	// Model
 	glm::mat4 identity = glm::mat4(1.0f);
-	glm::vec3 pos = glm::vec3(0.1f, 0.1f, 0.9f);
-	glm::vec3 pos2 = glm::vec3(0.1f, 0.3f, 0.9f);
+	glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.9f);  //RANDY
+	glm::vec3 pos2 = glm::vec3(0.0f, 0.2f, 1.0f); //GRASS  // +Z = Closer to the camera
 
 	glm::mat4 trans = glm::translate(identity, pos);
 	glm::mat4 trans2 = glm::translate(identity, pos2);
 
 	// View
 	glm::vec3 camPos = glm::vec3 (0.0f, 0.0f, -1.0f);
-	glm::mat4 view = glm::lookAt(camPos, camPos + glm::vec3(0, 0, 1.0f), glm::vec3(0, 1, 0));
+	glm::vec3 camDir = glm::vec3(0.0f, 0.0f, 1.0f);
+	glm::vec3 camUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+	glm::mat4 view = glm::lookAt(camPos, camPos + camDir, camUp);
+	glm::vec3 right = glm::normalize(glm::cross(camUp, camPos));
 
 	// Colour
 	float colour[4] = { 1.0f, 0.5f, 0.2f, 0.0f };
@@ -107,10 +111,15 @@ public:
 		if (pKey == GLFW_KEY_Q && pAction == GLFW_PRESS)
 			SceneManager::ChangeScene(Gameplay);
 
-		// FIX THIS, MOVEMENT BACKWARDS??
+
 		if (pKey == GLFW_KEY_D && pAction == GLFW_REPEAT)
 		{
-			camPos.x += 1.0f * SceneManager::DeltaTime;
+			camPos += right * SceneManager::DeltaTime;
+		}
+
+		if (pKey == GLFW_KEY_A && pAction == GLFW_REPEAT)
+		{
+			camPos -= right * SceneManager::DeltaTime;
 		}
 	}
 
