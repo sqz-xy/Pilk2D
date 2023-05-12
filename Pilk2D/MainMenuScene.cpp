@@ -29,7 +29,7 @@ public:
 	// Model
 	glm::mat4 identity = glm::mat4(1.0f);
 	glm::vec3 pos = glm::vec3(0.1f, 0.1f, 0.9f);
-	glm::vec3 pos2 = glm::vec3(0.3f, 0.3f, 0.9f);
+	glm::vec3 pos2 = glm::vec3(0.1f, 0.3f, 0.9f);
 
 	glm::mat4 trans = glm::translate(identity, pos);
 	glm::mat4 trans2 = glm::translate(identity, pos2);
@@ -99,6 +99,7 @@ public:
 	void Close() override
 	{
 		ResourceManager::DeleteResources();
+		SpriteManager::ClearSpriteGeometry();
 	}
 
 	void ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods) override

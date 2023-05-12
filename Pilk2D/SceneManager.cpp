@@ -52,7 +52,7 @@ void SceneManager::Initialise(const int pWidth, const int pHeight, std::string& 
 
     // Init initial main menu scene
     mCurrentScene = new MainMenuScene();
-    Load();
+    LoadCurrentScene();
 }
 
 void SceneManager::Run()
@@ -88,6 +88,9 @@ void SceneManager::Run()
 
 void SceneManager::ChangeScene(SceneType pSceneType)
 {
+    // Close current scene
+    CloseCurrentScene();
+
     switch (pSceneType)
     {
         case MainMenu:
@@ -97,23 +100,30 @@ void SceneManager::ChangeScene(SceneType pSceneType)
             mCurrentScene = new GameplayScene();
             break;
     }
-    Load();
+
+    // Load new scene
+    LoadCurrentScene();
 }
 
-void SceneManager::Render()
+void SceneManager::RenderCurrentScene()
 {
     mCurrentScene->Render();
 }
 
-void SceneManager::Update()
+void SceneManager::UpdateCurrentScene()
 {
     mCurrentScene->Update();
 }
 
-void SceneManager::Load()
+void SceneManager::LoadCurrentScene()
 {
     mCurrentScene->Load();
     glfwSetWindowTitle(mWindow, WindowName.c_str());
+}
+
+void SceneManager::CloseCurrentScene()
+{
+    mCurrentScene->Close();
 }
 
 void SceneManager::CursorPositionCallback(GLFWwindow* pWindow, double pXPos, double pYPos)

@@ -23,9 +23,10 @@ private:
 	SceneManager() = delete;
 	~SceneManager() = delete;
 
-	static void Render();
-	static void Update();
-	static void Load();
+	static void RenderCurrentScene();
+	static void UpdateCurrentScene();
+	static void LoadCurrentScene();
+	static void CloseCurrentScene();
 
 	static void CursorPositionCallback(GLFWwindow* pWindow, double pXPos, double pYPos);
 	static void KeyboardKeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods);
