@@ -18,6 +18,7 @@ public:
 
 	unsigned int shaderProgID = 0;
 	unsigned int texID = 0;
+	unsigned int texID2 = 0;
 	unsigned int VAO = 0;
 	int indexSize = 0;
 
@@ -28,7 +29,10 @@ public:
 	// Model
 	glm::mat4 identity = glm::mat4(1.0f);
 	glm::vec3 pos = glm::vec3(0.1f, 0.1f, 0.9f);
+	glm::vec3 pos2 = glm::vec3(0.3f, 0.3f, 0.9f);
+
 	glm::mat4 trans = glm::translate(identity, pos);
+	glm::mat4 trans2 = glm::translate(identity, pos2);
 
 	// View
 	glm::vec3 camPos = glm::vec3 (0.0f, 0.0f, -1.0f);
@@ -57,6 +61,7 @@ public:
 		if (!ResourceManager::CreateShaderProgram(&shaderProgID, "resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag")) return;
 
 		texID = ResourceManager::LoadTexture("resources/textures/grass.png");
+		texID2 = ResourceManager::LoadTexture("resources/textures/capsule.jpg");
 	}
 
 	void Render() const override
@@ -67,7 +72,6 @@ public:
 		glUseProgram(shaderProgID);
 
 		// Modify shader uniforms
-
 		glUniform1i(glGetUniformLocation(shaderProgID, "uDiffuse"), 0);
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uModel"), 1, GL_FALSE, &(trans)[0][0]);
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uProjection"), 1, GL_FALSE, &(proj)[0][0]);
@@ -76,6 +80,15 @@ public:
 		glUniform1f(glGetUniformLocation(shaderProgID, "uTime"), glfwGetTime());
 
 		SpriteManager::DrawSpriteGeometry();
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texID2);
+
+		glUniform1i(glGetUniformLocation(shaderProgID, "uDiffuse"), 0);
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uModel"), 1, GL_FALSE, &(trans2)[0][0]);
+
+		SpriteManager::DrawSpriteGeometry();
+
 	}
 
 	void Update() override
