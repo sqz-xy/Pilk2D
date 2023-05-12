@@ -9,6 +9,7 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 #include "SpriteManager.h"
+#include "Camera.h"
 
 class MainMenuScene : public Scene
 {
@@ -19,12 +20,6 @@ public:
 	unsigned int shaderProgID = 0;
 	unsigned int texID = 0;
 	unsigned int texID2 = 0;
-	unsigned int VAO = 0;
-	int indexSize = 0;
-
-	// Proj
-	float aspect = (float)SceneManager::Width / SceneManager::Height;
-	glm::mat4 proj = glm::ortho(-aspect, aspect, -1.0f, 1.0f, 10.0f, -10.0f);
 
 	// Model
 	glm::mat4 identity = glm::mat4(1.0f);
@@ -34,13 +29,8 @@ public:
 	glm::mat4 trans = glm::translate(identity, pos);
 	glm::mat4 trans2 = glm::translate(identity, pos2);
 
-	// View
-	glm::vec3 camPos = glm::vec3 (0.0f, 0.0f, -1.0f);
-	glm::vec3 camDir = glm::vec3(0.0f, 0.0f, 1.0f);
-	glm::vec3 camUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-	glm::mat4 view = glm::lookAt(camPos, camPos + camDir, camUp);
-	glm::vec3 right = glm::normalize(glm::cross(camUp, camPos));
+	//						POS							  TARGET
+	Camera mCamera = Camera(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
 	// Colour
 	float colour[4] = { 1.0f, 0.5f, 0.2f, 0.0f };
@@ -78,8 +68,8 @@ public:
 		// Modify shader uniforms
 		glUniform1i(glGetUniformLocation(shaderProgID, "uDiffuse"), 0);
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uModel"), 1, GL_FALSE, &(trans)[0][0]);
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uProjection"), 1, GL_FALSE, &(proj)[0][0]);
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uView"), 1, GL_FALSE, &(view)[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uProjection"), 1, GL_FALSE, &(mCamera.mProjection)[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uView"), 1, GL_FALSE, &(mCamera.mView)[0][0]);
 		glUniform4f(glGetUniformLocation(shaderProgID, "uColour"), colour[0], colour[1], colour[2], colour[3]);
 		glUniform1f(glGetUniformLocation(shaderProgID, "uTime"), glfwGetTime());
 
@@ -97,7 +87,7 @@ public:
 
 	void Update() override
 	{
-		view = glm::lookAt(camPos, camPos + glm::vec3(0, 0, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		mCamera.UpdateCamera();
 	}
 
 	void Close() override
@@ -111,15 +101,24 @@ public:
 		if (pKey == GLFW_KEY_Q && pAction == GLFW_PRESS)
 			SceneManager::ChangeScene(Gameplay);
 
-
 		if (pKey == GLFW_KEY_D && pAction == GLFW_REPEAT)
 		{
-			camPos += right * SceneManager::DeltaTime;
+			mCamera.MoveCamera(RIGHT, 1.0f);
 		}
 
 		if (pKey == GLFW_KEY_A && pAction == GLFW_REPEAT)
 		{
-			camPos -= right * SceneManager::DeltaTime;
+			mCamera.MoveCamera(LEFT, 1.0f);
+		}
+
+		if (pKey == GLFW_KEY_W && pAction == GLFW_REPEAT)
+		{
+			mCamera.MoveCamera(UP, 1.0f);
+		}
+
+		if (pKey == GLFW_KEY_S && pAction == GLFW_REPEAT)
+		{
+			mCamera.MoveCamera(DOWN, 1.0f);
 		}
 	}
 
