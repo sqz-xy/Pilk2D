@@ -6,7 +6,7 @@ struct GLFWwindow;
 class Scene;
 enum SceneType;
 
-class SceneManager
+class SceneManager final
 {
 public:
 	static void Initialise(const int pWidth, const int pHeight, std::string& pWindowName);

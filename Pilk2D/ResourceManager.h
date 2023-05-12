@@ -13,12 +13,14 @@ const int max_shaders = 20;
 class ResourceManager final
 {
 public:
-	explicit ResourceManager() = delete;
 	static bool CreateShaderProgram(unsigned int* pProgramHandle, const std::string& pVertFileName, const std::string& pFragFileName);
 	static unsigned int LoadTexture(const std::string& pPath);
 	static void DeleteResources();
 
 private:
+	ResourceManager() = delete;
+	~ResourceManager() = delete;
+
 	static bool LoadShader(const std::string& pFileName, std::string& pShaderSource);
 	static bool CompileShader(const GLenum& pShaderType, const std::string& pFileName, unsigned int* pShaderBuffer, int* pSuccess, char* pInfoLog);
 	
