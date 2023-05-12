@@ -4,12 +4,14 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 
-enum Direction
+enum CameraActions
 {
 	UP,
 	DOWN,
 	LEFT,
-	RIGHT
+	RIGHT,
+	ZOOM_IN,
+	ZOOM_OUT
 };
 
 /// Original Author: Thomas Beet, edited by James and Piotr
@@ -28,9 +30,12 @@ public:
 	glm::mat4 mView;
 	glm::mat4 mProjection;
 
+	float mZoom = 1.0f;
+
 	explicit Camera(const glm::vec3 pPos, const glm::vec3 pTarget);
 	~Camera();
 
-	void MoveCamera(const Direction pDirection, const float pDistance);
+	void MoveCamera(const CameraActions pAction, const float pDistance);
+	void ResetZoom();
 	void UpdateCamera();
 };

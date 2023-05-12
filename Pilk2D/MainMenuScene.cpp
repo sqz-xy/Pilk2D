@@ -98,7 +98,7 @@ public:
 
 	void ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods) override
 	{
-		if (pKey == GLFW_KEY_Q && pAction == GLFW_PRESS)
+		if (pKey == GLFW_KEY_G && pAction == GLFW_PRESS)
 			SceneManager::ChangeScene(Gameplay);
 
 		if (pKey == GLFW_KEY_D && pAction == GLFW_REPEAT)
@@ -119,6 +119,21 @@ public:
 		if (pKey == GLFW_KEY_S && pAction == GLFW_REPEAT)
 		{
 			mCamera.MoveCamera(DOWN, 1.0f);
+		}
+
+		if (pKey == GLFW_KEY_E && pAction == GLFW_REPEAT)
+		{
+			mCamera.MoveCamera(ZOOM_IN, 0.1f);
+		}
+
+		if (pKey == GLFW_KEY_Q && pAction == GLFW_REPEAT)
+		{
+			mCamera.MoveCamera(ZOOM_OUT, 0.1f);
+		}
+
+		if (pKey == GLFW_KEY_X && pAction == GLFW_PRESS)
+		{
+			mCamera.ResetZoom();
 		}
 	}
 
