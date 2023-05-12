@@ -101,32 +101,32 @@ public:
 		if (pKey == GLFW_KEY_G && pAction == GLFW_PRESS)
 			SceneManager::ChangeScene(Gameplay);
 
-		if (pKey == GLFW_KEY_D && pAction == GLFW_REPEAT)
+		if (pKey == GLFW_KEY_D && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 		{
 			mCamera.MoveCamera(RIGHT, 1.0f);
 		}
 
-		if (pKey == GLFW_KEY_A && pAction == GLFW_REPEAT)
+		if (pKey == GLFW_KEY_A && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 		{
 			mCamera.MoveCamera(LEFT, 1.0f);
 		}
 
-		if (pKey == GLFW_KEY_W && pAction == GLFW_REPEAT)
+		if (pKey == GLFW_KEY_W && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 		{
 			mCamera.MoveCamera(UP, 1.0f);
 		}
 
-		if (pKey == GLFW_KEY_S && pAction == GLFW_REPEAT)
+		if (pKey == GLFW_KEY_S && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 		{
 			mCamera.MoveCamera(DOWN, 1.0f);
 		}
 
-		if (pKey == GLFW_KEY_E && pAction == GLFW_REPEAT)
+		if (pKey == GLFW_KEY_E && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 		{
 			mCamera.MoveCamera(ZOOM_IN, 0.1f);
 		}
 
-		if (pKey == GLFW_KEY_Q && pAction == GLFW_REPEAT)
+		if (pKey == GLFW_KEY_Q && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 		{
 			mCamera.MoveCamera(ZOOM_OUT, 0.1f);
 		}
