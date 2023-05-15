@@ -21,7 +21,8 @@ Camera::Camera(const glm::vec3 pPos, const glm::vec3 pTarget)
 	// Mats
 	float aspect = (float)SceneManager::Width / SceneManager::Height;
 	mProjection = glm::ortho(-aspect, aspect, -1.0f, 1.0f, 10.0f, -10.0f);
-	mView = glm::lookAt(mCameraPos, mCameraPos + mCameraDirection, mCameraUp);
+	mView = glm::inverse(mProjection);
+	//mView = glm::lookAt(mCameraPos, mCameraPos + mCameraDirection, mCameraUp);
 
 }
 

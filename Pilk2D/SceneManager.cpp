@@ -142,5 +142,7 @@ void SceneManager::KeyboardKeyCallback(GLFWwindow* pWindow, int pKey, int pScanc
 
 void SceneManager::FrameBufferSizeCallback(GLFWwindow* pWindow, int pWidth, int pHeight)
 {
+    Width = pWidth;
+    Height = pHeight;
 	glViewport(0, 0, pWidth, pHeight);
 }
