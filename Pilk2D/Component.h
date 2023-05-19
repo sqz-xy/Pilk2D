@@ -7,21 +7,22 @@
 class Component
 {
 public:
-	virtual ~Component() = 0;
+	virtual ~Component();
 };
 
 class ComponentTransform : public Component {
 
 public:
-	explicit ComponentTransform(glm::vec2 pTranslation, float pAngle, glm::vec2 pScale, int pLayer);
+	ComponentTransform(glm::vec2 pTranslation, float pAngle, glm::vec2 pScale, int pLayer);
+	~ComponentTransform();
 
-	glm::vec3 mTranslation;
+	glm::vec2 mTranslation;
 	float mAngle;
 	glm::vec2 mScale;
 	int mLayer;
-	glm::mat4 mTranslate;
+	glm::mat4 mTransform;
 
-	void UpdateTranslation(glm::vec3 pTranslation);
+	void UpdateTranslation(glm::vec2 pTranslation);
 	void UpdateScale(glm::vec2 pScale);
 	void UpdateRotation(float pAngle);
 
