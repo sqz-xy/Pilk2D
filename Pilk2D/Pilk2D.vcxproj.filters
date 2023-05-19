@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{4178b02e-dc14-46a1-b899-efd64362e371}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{e6b42253-b0f6-4349-844b-d4d5de05fbb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity">
+      <UniqueIdentifier>{167a12ac-89b4-4b46-9a43-67a5c43db51e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
