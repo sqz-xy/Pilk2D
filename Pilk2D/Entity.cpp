@@ -18,8 +18,7 @@ Entity::~Entity()
 	// TODO: Delete Components	
 }
 
-template<typename T>
-T* GetComponent()
+template<typename T> T* Entity::GetComponent()
 {
 	for (int i = 0; i < m_components.size(); i++)
 	{
