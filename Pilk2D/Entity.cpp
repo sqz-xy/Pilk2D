@@ -21,9 +21,9 @@ Entity::~Entity()
 template<typename T>
 T* GetComponent()
 {
-	for (int i = 0; i < m_components.size(); i++)
+	for (int i = 0; i < mComponents.size(); i++)
 	{
-		T* result = dynamic_cast<T*>(m_components[i]);
+		T* result = dynamic_cast<T*>(mComponents[i]);
 		if (result != nullptr)
 		{
 			return result;
