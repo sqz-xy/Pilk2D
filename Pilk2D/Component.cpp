@@ -4,13 +4,14 @@
 #include "gtc/type_ptr.hpp"
 #include <string>
 #include "ResourceManager.h"
+#include <glfw3.h>
+#include "Camera.h"
 
 #pragma region Component
 
 Component::~Component() {}
 
 #pragma endregion
-
 
 #pragma region ComponentTransform
 
@@ -25,7 +26,10 @@ ComponentTransform::ComponentTransform(glm::vec2 pTranslation, float pAngle, glm
 	UpdateTransform();
 }
 
-ComponentTransform::~ComponentTransform() {}
+ComponentTransform::~ComponentTransform() 
+{
+	// Clear texture buffer
+}
 
 void ComponentTransform::UpdateTranslation(glm::vec2 pTranslation) {
 	mTranslation = pTranslation;
@@ -82,3 +86,34 @@ unsigned int ComponentSprite::GetTextureBuffer()
 }
 
 #pragma endregion
+
+#pragma region ComponentShader
+
+ComponentShader::ComponentShader(const std::string& pVertexFileName, const std::string& pFragmentFileName)
+{
+	if (!ResourceManager::CreateShaderProgram(&mShaderHandle, pVertexFileName, pFragmentFileName)) return;
+}
+
+ComponentShader::~ComponentShader()
+{
+	// Clear shader buffer
+}
+
+void ComponentShader::UseShader(Camera& pCamera, glm::mat4 pTransform)
+{
+	glUseProgram(mShaderHandle);
+	glUniformMatrix4fv(glGetUniformLocation(mShaderHandle, "uModel"), 1, GL_FALSE, &(pTransform)[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(mShaderHandle, "uView"), 1, GL_FALSE, &(pCamera.mView)[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(mShaderHandle, "uProjection"), 1, GL_FALSE, &(pCamera.mProjection)[0][0]);
+
+	glUniform1f(glGetUniformLocation(mShaderHandle, "uTime"), glfwGetTime());
+}
+
+inline unsigned int ComponentShader::GetHandle()
+{
+	return mShaderHandle;
+}
+
+
+#pragma endregion
+

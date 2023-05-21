@@ -5,14 +5,17 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 
+// Forward Declarations
+class Camera;
+
 class Component
 {
 public:
 	virtual ~Component();
 };
 
-class ComponentTransform : public Component {
-
+class ComponentTransform : public Component 
+{
 public:
 	ComponentTransform(glm::vec2 pTranslation, float pAngle, glm::vec2 pScale, int pLayer);
 	~ComponentTransform();
@@ -28,22 +31,33 @@ public:
 	void UpdateRotation(float pAngle);
 
 private:
-
 	void UpdateTransform();
 
 };
 
-class ComponentSprite : public Component {
-
+class ComponentSprite : public Component 
+{
 public:
-
 	ComponentSprite(const std::string& pFilename);
 	~ComponentSprite();
 
-	unsigned int GetTextureBuffer();
+	inline unsigned int GetTextureBuffer();
 
 private:
 
 	unsigned int mTextureBuffer;
 
+};
+
+class ComponentShader : public Component 
+{
+public: 
+	ComponentShader(const std::string& pVertexFileName, const std::string& pFragmentFileName);
+	~ComponentShader();
+
+	void UseShader(Camera& pCamera, glm::mat4 pTransform);
+	inline unsigned int GetHandle();
+
+private:
+	unsigned int mShaderHandle;
 };
