@@ -80,6 +80,12 @@ ComponentSprite::~ComponentSprite()
 
 }
 
+void ComponentSprite::UseSprite()
+{
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mTextureBuffer);
+}
+
 unsigned int ComponentSprite::GetTextureBuffer()
 {
 	return mTextureBuffer;
@@ -99,7 +105,7 @@ ComponentShader::~ComponentShader()
 	// Clear shader buffer
 }
 
-void ComponentShader::UseShader(Camera& pCamera, glm::mat4 pTransform)
+void ComponentShader::UseShader(const Camera& pCamera, glm::mat4 pTransform)
 {
 	glUseProgram(mShaderHandle);
 	glUniformMatrix4fv(glGetUniformLocation(mShaderHandle, "uModel"), 1, GL_FALSE, &(pTransform)[0][0]);

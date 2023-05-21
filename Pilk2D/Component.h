@@ -41,6 +41,7 @@ public:
 	ComponentSprite(const std::string& pFilename);
 	~ComponentSprite();
 
+	void UseSprite();
 	inline unsigned int GetTextureBuffer();
 
 private:
@@ -55,7 +56,7 @@ public:
 	ComponentShader(const std::string& pVertexFileName, const std::string& pFragmentFileName);
 	~ComponentShader();
 
-	void UseShader(Camera& pCamera, glm::mat4 pTransform);
+	void UseShader(const Camera& pCamera, glm::mat4 pTransform);
 	inline unsigned int GetHandle();
 
 private:

@@ -10,6 +10,7 @@
 #include "gtc/type_ptr.hpp"
 #include "SpriteManager.h"
 #include "Camera.h"
+#include "Component.h"
 
 class MainMenuScene : public Scene
 {
@@ -21,13 +22,13 @@ public:
 	unsigned int texID = 0;
 	unsigned int texID2 = 0;
 
-	// Model
-	glm::mat4 identity = glm::mat4(1.0f);
-	glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.9f);  //RANDY
-	glm::vec3 pos2 = glm::vec3(0.0f, 0.2f, 1.0f); //GRASS  // +Z = Closer to the camera
+	ComponentTransform* trans1 = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(1.0f, 1.0f), 0.9f);
+	ComponentSprite* sprite1 = new ComponentSprite("resources/textures/grass.png");
+	ComponentShader* shader1 = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
 
-	glm::mat4 trans = glm::translate(identity, pos);
-	glm::mat4 trans2 = glm::translate(identity, pos2);
+	ComponentTransform* trans2 = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(1.0f, 1.0f), 1.0f);
+	ComponentSprite* sprite2 = new ComponentSprite("resources/textures/capsule.jpg");
+	ComponentShader* shader2 = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
 
 	//						POS							  TARGET
 	Camera mCamera = Camera(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -51,36 +52,16 @@ public:
 	void Load() override
 	{
 		SpriteManager::InitSpriteGeometry();
-
-		if (!ResourceManager::CreateShaderProgram(&shaderProgID, "resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag")) return;
-
-		texID = ResourceManager::LoadTexture("resources/textures/grass.png");
-		texID2 = ResourceManager::LoadTexture("resources/textures/capsule.jpg");
 	}
 
 	void Render() const override
 	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texID);
-
-		glUseProgram(shaderProgID);
-
-		// Modify shader uniforms
-		glUniform1i(glGetUniformLocation(shaderProgID, "uDiffuse"), 0);
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uModel"), 1, GL_FALSE, &(trans)[0][0]);
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uProjection"), 1, GL_FALSE, &(mCamera.mProjection)[0][0]);
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uView"), 1, GL_FALSE, &(mCamera.mView)[0][0]);
-		glUniform4f(glGetUniformLocation(shaderProgID, "uColour"), colour[0], colour[1], colour[2], colour[3]);
-		glUniform1f(glGetUniformLocation(shaderProgID, "uTime"), glfwGetTime());
-
+		sprite1->UseSprite();
+		shader1->UseShader(mCamera, trans1->mTransform);
 		SpriteManager::DrawSpriteGeometry();
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texID2);
-
-		glUniform1i(glGetUniformLocation(shaderProgID, "uDiffuse"), 0);
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgID, "uModel"), 1, GL_FALSE, &(trans2)[0][0]);
-
+		sprite2->UseSprite();
+		shader2->UseShader(mCamera, trans2->mTransform);
 		SpriteManager::DrawSpriteGeometry();
 
 	}
