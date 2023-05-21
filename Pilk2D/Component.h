@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
@@ -29,5 +30,20 @@ public:
 private:
 
 	void UpdateTransform();
+
+};
+
+class ComponentSprite : public Component {
+
+public:
+
+	ComponentSprite(const std::string& pFilename);
+	~ComponentSprite();
+
+	unsigned int GetTextureBuffer();
+
+private:
+
+	unsigned int mTextureBuffer;
 
 };

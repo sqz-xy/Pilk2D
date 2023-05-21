@@ -2,6 +2,8 @@
 #include "glm.hpp"
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
+#include <string>
+#include "ResourceManager.h"
 
 #pragma region Component
 
@@ -59,5 +61,18 @@ void ComponentTransform::UpdateTransform() {
 	mTransform = rotationMat;
 }
 
+
+#pragma endregion
+
+#pragma region ComponentSprite
+
+ComponentSprite::ComponentSprite(const std::string& pFilename) {
+
+	mTextureBuffer =  ResourceManager::LoadTexture(pFilename);
+}
+
+unsigned int ComponentSprite::GetTextureBuffer() {
+	return mTextureBuffer;
+}
 
 #pragma endregion
