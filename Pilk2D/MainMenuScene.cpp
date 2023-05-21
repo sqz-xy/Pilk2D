@@ -18,10 +18,6 @@ public:
 
 	// TEMP VARS ----------------------------------
 
-	unsigned int shaderProgID = 0;
-	unsigned int texID = 0;
-	unsigned int texID2 = 0;
-
 	ComponentTransform* trans1 = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(1.0f, 1.0f), 0.9f);
 	ComponentSprite* sprite1 = new ComponentSprite("resources/textures/grass.png");
 	ComponentShader* shader1 = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");

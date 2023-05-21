@@ -2,6 +2,7 @@
 
 #include "Camera.h"
 #include "Entity.h"
+#include "Component.h"
 #include "vector"
 
 class System {
@@ -28,6 +29,8 @@ public:
 	void Execute(const float pDeltaTime, std::vector<Entity*> pEntities) override;
 
 private:
+
+	void Render(ComponentSprite* pSprite, ComponentTransform* pTrans, ComponentShader* pShader);
 
 	Camera* mCamera;
 
