@@ -28,7 +28,6 @@ ComponentTransform::ComponentTransform(glm::vec2 pTranslation, float pAngle, glm
 
 ComponentTransform::~ComponentTransform() 
 {
-	// Clear texture buffer
 }
 
 void ComponentTransform::UpdateTranslation(glm::vec2 pTranslation) {
