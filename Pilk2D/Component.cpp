@@ -66,12 +66,18 @@ void ComponentTransform::UpdateTransform() {
 
 #pragma region ComponentSprite
 
-ComponentSprite::ComponentSprite(const std::string& pFilename) {
-
+ComponentSprite::ComponentSprite(const std::string& pFilename) 
+{
 	mTextureBuffer =  ResourceManager::LoadTexture(pFilename);
 }
 
-unsigned int ComponentSprite::GetTextureBuffer() {
+ComponentSprite::~ComponentSprite()
+{
+
+}
+
+unsigned int ComponentSprite::GetTextureBuffer()
+{
 	return mTextureBuffer;
 }
 
