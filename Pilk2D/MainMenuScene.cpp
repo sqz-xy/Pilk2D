@@ -32,9 +32,6 @@ public:
 
 	//						POS							  TARGET
 	Camera mCamera = Camera(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
-	// Colour
-	float colour[4] = { 1.0f, 0.5f, 0.2f, 0.0f };
 	
 	// TEMP VARS ----------------------------------
 
