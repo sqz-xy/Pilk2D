@@ -1,7 +1,8 @@
 #pragma once
 #include "System.h"
 #include "vector"
-#include "Entity.h"
+
+class Entity;
 
 class SystemManager {
 

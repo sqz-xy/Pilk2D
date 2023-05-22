@@ -1,3 +1,4 @@
+
 #include "EntityManager.h"
 #include "Entity.h"
 #include "Debug.h"
@@ -163,3 +164,4 @@ inline int EntityManager::EntityCount() const
 {
     return mEntities.size();
 }
+
