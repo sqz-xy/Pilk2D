@@ -11,6 +11,11 @@
 #include "SpriteManager.h"
 #include "Camera.h"
 #include "Component.h"
+#include "SystemManager.h"
+#include "EntityManager.h"
+
+// 
+
 
 class MainMenuScene : public Scene
 {
@@ -31,10 +36,26 @@ public:
 	
 	// TEMP VARS ----------------------------------
 
+	SystemManager* sysman = new SystemManager();
+	EntityManager* entitymanager = new EntityManager();
+
+	SystemRender* sysrender = new SystemRender(&mCamera);
 
 	explicit MainMenuScene() : Scene()
 	{ 
 		SceneManager::WindowName = "Main Menu!";
+
+		sysman->AddSystem(sysrender);
+
+		Entity* e = new Entity("randy");
+		ComponentTransform* randytrans = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(1.0f, 1.0f), 1.1f);
+		ComponentSprite* randysprite = new ComponentSprite("resources/textures/capsule.jpg");
+		ComponentShader* randyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
+		e->AddComponent(randytrans);
+		e->AddComponent(randysprite);
+		e->AddComponent(randyshader);
+		
+		entitymanager->AddEntity(e);
 	}
 
 	~MainMenuScene() override
@@ -62,6 +83,8 @@ public:
 	void Update() override
 	{
 		mCamera.UpdateCamera();
+
+		sysman->ExecuteSystems(entitymanager->mEntities);
 	}
 
 	void Close() override
