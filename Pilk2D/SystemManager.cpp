@@ -1,4 +1,3 @@
-#pragma once
 #include "System.h"
 #include "vector"
 #include "SystemManager.h"

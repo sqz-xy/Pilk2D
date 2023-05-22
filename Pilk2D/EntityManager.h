@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <vector>
@@ -31,3 +32,4 @@ public:
 	std::vector<Entity*> mEntities;
 private:
 };
+

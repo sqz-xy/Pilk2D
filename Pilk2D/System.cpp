@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "Component.h"
 #include "SpriteManager.h"
+#include "Entity.h"
 
 #pragma region System
 

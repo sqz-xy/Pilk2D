@@ -1,6 +1,5 @@
 #include "Entity.h"
-
-// TODO: COMPONENT_H
+#include "Component.h"
 
 Entity::Entity(const std::string& pName) : mName(pName), mID(ENTITY_ID++)
 {
@@ -16,27 +15,4 @@ Entity::~Entity()
 {
 	//for (Component* component : mComponents)
 	// TODO: Delete Components	
-}
-
-template<typename T> T* Entity::GetComponent()
-{
-	for (int i = 0; i < mComponents.size(); i++)
-	{
-		T* result = dynamic_cast<T*>(mComponents[i]);
-		if (result != nullptr)
-		{
-			return result;
-		}
-	}
-	return nullptr;
-}
-
-inline const std::string& Entity::GetName()
-{
-	return mName;
-}
-
-inline const unsigned int Entity::GetID()
-{
-	return mID;
 }
