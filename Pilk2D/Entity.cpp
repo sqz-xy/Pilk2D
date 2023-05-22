@@ -1,5 +1,4 @@
 #include "Entity.h"
-#include "Debug.h"
 
 // TODO: COMPONENT_H
 
