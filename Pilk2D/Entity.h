@@ -15,8 +15,8 @@ public:
 	~Entity();
 
 	template<typename T> T* GetComponent();
-	inline const std::string& Name();
-	inline const unsigned int ID();
+	inline const std::string& GetName();
+	inline const unsigned int GetID();
 
 	Entity& operator= (const class Entity&) = default;
 

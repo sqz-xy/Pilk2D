@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Debug.h"
 
 // TODO: COMPONENT_H
 
@@ -31,12 +32,12 @@ template<typename T> T* Entity::GetComponent()
 	return nullptr;
 }
 
-inline const std::string& Entity::Name()
+inline const std::string& Entity::GetName()
 {
 	return mName;
 }
 
-inline const unsigned int Entity::ID()
+inline const unsigned int Entity::GetID()
 {
 	return mID;
 }
