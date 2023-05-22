@@ -17,6 +17,7 @@ public:
 	template<typename T> T* GetComponent();
 	inline const std::string& GetName() { return mName; };
 	inline const int GetID() { return mID; };
+	void AddComponent(Component* pComponent);
 
 	Entity& operator= (const class Entity&) = default;
 

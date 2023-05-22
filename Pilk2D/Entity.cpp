@@ -11,6 +11,10 @@ Entity::Entity(const Entity& pEntity) : mName(pEntity.mName), mID(pEntity.mID), 
 
 }
 
+void Entity::AddComponent(Component* pComponent) {
+	mComponents.push_back(pComponent);
+}
+
 Entity::~Entity()
 {
 	//for (Component* component : mComponents)
