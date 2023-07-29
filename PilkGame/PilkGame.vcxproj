@@ -147,8 +147,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Pilk2D\GameplayScene.cpp" />
-    <ClCompile Include="..\Pilk2D\MainMenuScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
@@ -158,8 +156,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameplayScene.h" />
-    <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
