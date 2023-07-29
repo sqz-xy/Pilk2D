@@ -1,4 +1,5 @@
 #include <SceneManager.h>
+#include "TestScene.h"
 
 /**
  * \brief The main program
@@ -6,8 +7,8 @@
  */
 int main()
 {
-    std::string windowName = "Balls";
-    SceneManager::Initialise(800, 600, windowName);
+    Scene* mainMenu = new TestScene();
+    SceneManager::Initialise(800, 600, mainMenu);
     SceneManager::Run();
 
     return 0;

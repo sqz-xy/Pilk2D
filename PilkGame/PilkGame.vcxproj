@@ -73,10 +73,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)include\glad;$(SolutionDir)include\glfw;$(SolutionDir)include\glm;$(SolutionDir)include\imgui;$(SolutionDir)include\irrKlang;$(SolutionDir)include\KHR;$(SolutionDir)include\stb;$(SolutionDir)Pilk2D;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\glfw;$(SolutionDir)lib\irrKlang;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Platform)\$(Configuration)\PilkGame\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)include\glad;$(SolutionDir)include\glfw;$(SolutionDir)include\glm;$(SolutionDir)include\imgui;$(SolutionDir)include\irrKlang;$(SolutionDir)include\KHR;$(SolutionDir)include\stb;$(SolutionDir)Pilk2D;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\glfw;$(SolutionDir)lib\irrKlang;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Platform)\$(Configuration)\PilkGame\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -148,11 +150,17 @@
     <ClCompile Include="..\Pilk2D\GameplayScene.cpp" />
     <ClCompile Include="..\Pilk2D\MainMenuScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pilk2D\Pilk2D.vcxproj">
       <Project>{45332e30-2b1e-47c9-86b6-00cefcc7bab6}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameplayScene.h" />
+    <ClInclude Include="MainMenuScene.h" />
+    <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

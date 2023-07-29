@@ -9,9 +9,9 @@ enum SceneType;
 class SceneManager final
 {
 public:
-	static void Initialise(const int pWidth, const int pHeight, std::string& pWindowName);
+	static void Initialise(const int pWidth, const int pHeight, Scene* pStartScene);
 	static void Run();
-	static void ChangeScene(SceneType pSceneType);
+	static void ChangeScene(Scene* pNewScene);
 
 	// Static game variables, across the program
 	inline static int Width;

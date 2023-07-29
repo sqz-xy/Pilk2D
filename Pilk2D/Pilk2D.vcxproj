@@ -74,10 +74,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)include\glad;$(SolutionDir)include\glfw;$(SolutionDir)include\glm;$(SolutionDir)include\imgui;$(SolutionDir)include\irrKlang;$(SolutionDir)include\KHR;$(SolutionDir)include\stb;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\glfw;$(SolutionDir)lib\irrKlang;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Platform)\$(Configuration)\Pilk2D\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)include\glad;$(SolutionDir)include\glfw;$(SolutionDir)include\glm;$(SolutionDir)include\imgui;$(SolutionDir)include\irrKlang;$(SolutionDir)include\KHR;$(SolutionDir)include\stb;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\glfw;$(SolutionDir)lib\irrKlang;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Platform)\$(Configuration)\Pilk2D\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

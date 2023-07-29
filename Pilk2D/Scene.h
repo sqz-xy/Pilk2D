@@ -2,12 +2,6 @@
 
 struct GLFWwindow;
 
-enum SceneType
-{
-	MainMenu,
-	Gameplay
-};
-
 // By Thomas Beet
 class Scene
 {

@@ -7,10 +7,11 @@
 #include "Scene.h"
 #include "MainMenuScene.cpp"
 #include "GameplayScene.cpp"
+#include "ResourceManager.h"
+#include "SpriteManager.h"
 
-void SceneManager::Initialise(const int pWidth, const int pHeight, std::string& pWindowName)
+void SceneManager::Initialise(const int pWidth, const int pHeight, Scene* pStartScene)
 {
-    WindowName = pWindowName;
     Width = pWidth;
     Height = pHeight;
 
@@ -47,10 +48,8 @@ void SceneManager::Initialise(const int pWidth, const int pHeight, std::string& 
     glfwSetKeyCallback(mWindow, KeyboardKeyCallback);
     glfwSetCursorPosCallback(mWindow, CursorPositionCallback);
 
-
     // Init initial main menu scene
-    mCurrentScene = new MainMenuScene();
-    LoadCurrentScene();
+    ChangeScene(pStartScene);
 }
 
 void SceneManager::Run()
@@ -85,25 +84,30 @@ void SceneManager::Run()
         glfwSwapBuffers(mWindow);
         glfwPollEvents();
     }
+
+    ResourceManager::DeleteResources();
+    SpriteManager::ClearSpriteGeometry();
+
+    delete mCurrentScene;
+    mCurrentScene = nullptr;
 }
 
-void SceneManager::ChangeScene(SceneType pSceneType)
+void SceneManager::ChangeScene(Scene* pNewScene)
 {
     // Close current scene
-    CloseCurrentScene();
-
-    switch (pSceneType)
+    if (mCurrentScene != NULL)
     {
-        case MainMenu:
-            mCurrentScene = new MainMenuScene();
-            break;
-        case Gameplay:
-            mCurrentScene = new GameplayScene();
-            break;
+        CloseCurrentScene();
+        delete mCurrentScene;
+        mCurrentScene = nullptr;
     }
+
+    mCurrentScene = pNewScene;
 
     // Load new scene
     LoadCurrentScene();
+
+    glfwSetWindowTitle(mWindow, WindowName.c_str());
 }
 
 void SceneManager::RenderCurrentScene()
