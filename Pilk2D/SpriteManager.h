@@ -2,19 +2,26 @@
 
 class SpriteManager final
 {
-public:
+protected:
+	SpriteManager();
+	~SpriteManager();
 
+	static SpriteManager* mInstance;
+
+public:
+	SpriteManager(SpriteManager& pOther) = delete;
+	void operator=(const SpriteManager& pRhs) = delete;
+
+	static SpriteManager* GetInstance();
+	static void KillInstance();
 	static bool InitSpriteGeometry();
 	static bool DrawSpriteGeometry();
 	static bool ClearSpriteGeometry();
 
 private:
-	SpriteManager() = delete;
-	~SpriteManager() = delete;
-
-	inline static unsigned int mSpriteVAO = -1;
-	inline static unsigned int mSpriteVBO = -1;
-	inline static unsigned int mSpriteEBO = -1;
-	inline static unsigned int mIndexSize = -1;
+	unsigned int mSpriteVAO = -1;
+	unsigned int mSpriteVBO = -1;
+	unsigned int mSpriteEBO = -1;
+	unsigned int mIndexSize = -1;
 };
 

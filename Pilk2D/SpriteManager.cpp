@@ -3,9 +3,39 @@
 #include <glad.h>
 #include <iostream>
 
+SpriteManager* SpriteManager::mInstance = nullptr;
+
+SpriteManager::SpriteManager()
+{
+}
+
+SpriteManager::~SpriteManager()
+{
+}
+
+SpriteManager* SpriteManager::GetInstance()
+{
+	if (mInstance == nullptr)
+	{
+		mInstance = new SpriteManager();
+	}
+
+	return mInstance;
+}
+
+void SpriteManager::KillInstance()
+{
+	if (mInstance != nullptr)
+	{
+		delete mInstance;
+	}
+}
+
 bool SpriteManager::InitSpriteGeometry()
 {
-	if (mSpriteVAO != -1)
+	SpriteManager* SpriteManager = GetInstance();
+
+	if (SpriteManager->mSpriteVAO != -1)
 	{
 		std::cout << "Data already bound" << std::endl;
 		return false;
@@ -25,18 +55,18 @@ bool SpriteManager::InitSpriteGeometry()
 		1, 2, 3  // second triangle
 	};
 
-	mIndexSize = sizeof(indices);
+	SpriteManager->mIndexSize = sizeof(indices);
 
-	glGenVertexArrays(1, &mSpriteVAO);
-	glGenBuffers(1, &mSpriteVBO);
-	glGenBuffers(1, &mSpriteEBO);
+	glGenVertexArrays(1, &SpriteManager->mSpriteVAO);
+	glGenBuffers(1, &SpriteManager->mSpriteVBO);
+	glGenBuffers(1, &SpriteManager->mSpriteEBO);
 
-	glBindVertexArray(mSpriteVAO);
+	glBindVertexArray(SpriteManager->mSpriteVAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, mSpriteVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, SpriteManager->mSpriteVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mSpriteEBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, SpriteManager->mSpriteEBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// position attribute
@@ -60,8 +90,10 @@ bool SpriteManager::DrawSpriteGeometry()
 {
 	//TODO: Add checks
 
-	glBindVertexArray(mSpriteVAO);
-	glDrawElements(GL_TRIANGLES, mIndexSize / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
+	SpriteManager* SpriteManager = GetInstance();
+
+	glBindVertexArray(SpriteManager->mSpriteVAO);
+	glDrawElements(GL_TRIANGLES, SpriteManager->mIndexSize / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 
 	return true;
@@ -69,19 +101,22 @@ bool SpriteManager::DrawSpriteGeometry()
 
 bool SpriteManager::ClearSpriteGeometry()
 {
-	if (mSpriteVAO == -1)
+
+	SpriteManager* SpriteManager = GetInstance();
+
+	if (SpriteManager->mSpriteVAO == -1)
 	{
 		std::cout << "Data not bound" << std::endl;
 		return false;
 	}
 
-	glDeleteBuffers(1, &mSpriteVBO);
-	glDeleteVertexArrays(1, &mSpriteVAO);
-	glDeleteBuffers(1, &mSpriteEBO);
+	glDeleteBuffers(1, &SpriteManager->mSpriteVBO);
+	glDeleteVertexArrays(1, &SpriteManager->mSpriteVAO);
+	glDeleteBuffers(1, &SpriteManager->mSpriteEBO);
 
-	mSpriteVBO = -1;
-	mSpriteVAO = -1;
-	mSpriteEBO = -1;
+	SpriteManager->mSpriteVBO = -1;
+	SpriteManager->mSpriteVAO = -1;
+	SpriteManager->mSpriteEBO = -1;
 
 	return true;
 }

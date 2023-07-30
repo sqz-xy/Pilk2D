@@ -92,6 +92,7 @@ void SceneManager::Run()
     mCurrentScene = nullptr;
 
     ResourceManager::KillInstance();
+    SpriteManager::KillInstance();
 }
 
 void SceneManager::ChangeScene(Scene* pNewScene)
