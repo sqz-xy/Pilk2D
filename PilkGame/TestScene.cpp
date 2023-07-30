@@ -89,6 +89,11 @@ void TestScene::RenderGUI()
 
 	ImGui::Begin("ImGui Test");
 	ImGui::Text("Goo goo ga ga");
+
+	ImGui::BeginMainMenuBar();
+	ImGui::Button("he he ha ha");
+	ImGui::EndMainMenuBar();
+
 	ImGui::End();
 
 	ImGUIManager->EndFrame();
