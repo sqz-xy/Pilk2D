@@ -7,6 +7,8 @@
  */
 int main()
 {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
     Scene* mainMenu = new TestScene();
     SceneManager::Initialise(800, 600, mainMenu);
     SceneManager::Run();
