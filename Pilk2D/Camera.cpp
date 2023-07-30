@@ -12,6 +12,8 @@
 /// </summary>
 Camera::Camera(const glm::vec3 pPos, const glm::vec3 pTarget)
 {
+	mSceneManagerInstance = SceneManager::GetInstance();
+
 	// Vecs
 	mCameraPos = pPos;
 	mCameraTarget = pTarget;
@@ -19,7 +21,7 @@ Camera::Camera(const glm::vec3 pPos, const glm::vec3 pTarget)
 	mCameraRight = glm::normalize(glm::cross(mCameraUp, mCameraDirection));
 
 	// Mats
-	float aspect = (float)SceneManager::Width / SceneManager::Height;
+	float aspect = (float)mSceneManagerInstance->Width / mSceneManagerInstance->Width;
 	mProjection = glm::ortho(-aspect, aspect, -1.0f, 1.0f, 10.0f, -10.0f);
 	mView = glm::inverse(mProjection);
 	//mView = glm::lookAt(mCameraPos, mCameraPos + mCameraDirection, mCameraUp);
@@ -31,14 +33,13 @@ Camera::~Camera()
 
 }
 
-
 /// Original Author: Thomas Beet
 /// <summary>
 /// Movesd the camera in a given direction a given distance
 /// </summary>
 void Camera::MoveCamera(const CameraActions pAction, const float pDistance)
 {
-	const float camSpeed = pDistance * SceneManager::DeltaTime;
+	const float camSpeed = pDistance * mSceneManagerInstance->DeltaTime;
 
 	switch (pAction)
 	{
@@ -80,7 +81,7 @@ void Camera::ResetZoom()
 /// </summary>
 void Camera::UpdateCamera()
 {
-	float aspect = (static_cast<float>(SceneManager::Width)) / (SceneManager::Height);
+	float aspect = (static_cast<float>(mSceneManagerInstance->Width)) / (mSceneManagerInstance->Height);
 	mView = glm::lookAt(mCameraPos, mCameraPos + mCameraDirection, mCameraUp);
 	mProjection = glm::ortho(-aspect * mZoom, aspect * mZoom, -1.0f * mZoom, 1.0f * mZoom, 10.0f, -10.0f);
 }

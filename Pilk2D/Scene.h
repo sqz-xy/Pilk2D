@@ -1,6 +1,7 @@
 #pragma once
 
 struct GLFWwindow;
+class SceneManager;
 
 // By Thomas Beet
 class Scene
@@ -35,6 +36,9 @@ public:
 	/// Mouse Input Processing
 	/// </summary>
 	virtual void ProcessMouseInput(GLFWwindow* pWindow, double pXPos, double pYPos) = 0;
+
+protected:
+	SceneManager* mSceneManagerInstance;
 };
 
 

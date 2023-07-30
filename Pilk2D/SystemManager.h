@@ -1,8 +1,9 @@
 #pragma once
-#include "System.h"
 #include "vector"
 
 class Entity;
+class System;
+class SceneManager;
 
 class SystemManager {
 
@@ -16,7 +17,6 @@ public:
 	void ClearSystems();
 
 private:
-
 	std::vector<System*>mSystems;
-
+	SceneManager* mSceneManagerInstance;
 };

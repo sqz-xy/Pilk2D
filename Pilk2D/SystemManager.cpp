@@ -4,26 +4,32 @@
 #include "SceneManager.h"
 #include "Entity.h"
 
-SystemManager::SystemManager() {
+SystemManager::SystemManager() 
+{
+	mSceneManagerInstance = SceneManager::GetInstance();
 }
 
-SystemManager::~SystemManager() {
+SystemManager::~SystemManager() 
+{
 	ClearSystems();
 }
 
-void SystemManager::ExecuteSystems(std::vector<Entity*>pEntities) {
+void SystemManager::ExecuteSystems(std::vector<Entity*>pEntities) 
+{
 
 	for (System* s : mSystems)
 	{
-		s->Execute(SceneManager::DeltaTime, pEntities);
+		s->Execute(mSceneManagerInstance->DeltaTime, pEntities);
 	}
 
 }
 
-void SystemManager::AddSystem(System* pSystem) {
+void SystemManager::AddSystem(System* pSystem) 
+{
 	mSystems.push_back(pSystem);
 }
 
-void SystemManager::ClearSystems() {
+void SystemManager::ClearSystems() 
+{
 	mSystems.clear();
 }

@@ -9,6 +9,8 @@
 #include <SystemManager.h>
 #include <EntityManager.h>
 #include <SpriteManager.h>
+#include <Entity.h>
+#include <System.h>
 
 // TEMP VARS ----------------------------------
 
@@ -32,7 +34,7 @@ SystemRender* sysrender = new SystemRender(&mCamera);
 
 TestScene::TestScene() : Scene()
 {
-	SceneManager::WindowName = "Test!";
+	mSceneManagerInstance->WindowName = "Test!";
 }
 
 TestScene::~TestScene() 

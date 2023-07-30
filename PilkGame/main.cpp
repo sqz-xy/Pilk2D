@@ -11,5 +11,6 @@ int main()
     SceneManager::Initialise(800, 600, mainMenu);
     SceneManager::Run();
 
+    SceneManager::KillInstance();
     return 0;
 }

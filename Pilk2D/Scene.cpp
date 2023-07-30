@@ -6,7 +6,7 @@
 //TODO: Implement gang of three
 Scene::Scene()
 {
-
+	mSceneManagerInstance = SceneManager::GetInstance();
 }
 
 Scene::~Scene() = default;

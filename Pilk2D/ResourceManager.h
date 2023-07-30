@@ -12,15 +12,6 @@ const int max_shaders = 20;
 /// </summary>
 class ResourceManager final
 {
-protected:
-	ResourceManager();
-	~ResourceManager();
-
-	bool LoadShader(const std::string& pFileName, std::string& pShaderSource);
-	bool CompileShader(const GLenum& pShaderType, const std::string& pFileName, unsigned int* pShaderBuffer, int* pSuccess, char* pInfoLog);
-
-	static ResourceManager* mInstance;
-
 public:
 	ResourceManager(ResourceManager& pOther) = delete;
 	void operator=(const ResourceManager& pRhs) = delete;
@@ -33,5 +24,15 @@ public:
 
 	std::map<std::string, unsigned int> mShaderMap;
 	std::map<std::string, unsigned int> mTextureMap;
+
+protected:
+	ResourceManager();
+	~ResourceManager();
+
+	bool LoadShader(const std::string& pFileName, std::string& pShaderSource);
+	bool CompileShader(const GLenum& pShaderType, const std::string& pFileName, unsigned int* pShaderBuffer, int* pSuccess, char* pInfoLog);
+
+	static ResourceManager* mInstance;
+
 };
 

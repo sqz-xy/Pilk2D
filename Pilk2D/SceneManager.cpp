@@ -10,10 +10,14 @@
 #include "ResourceManager.h"
 #include "SpriteManager.h"
 
+SceneManager* SceneManager::mInstance = nullptr;
+
 void SceneManager::Initialise(const int pWidth, const int pHeight, Scene* pStartScene)
 {
-    Width = pWidth;
-    Height = pHeight;
+    SceneManager* SceneManager = GetInstance();
+
+    SceneManager->Width = pWidth;
+    SceneManager->Height = pHeight;
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -21,17 +25,17 @@ void SceneManager::Initialise(const int pWidth, const int pHeight, Scene* pStart
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create the window
-    GLFWwindow* window = glfwCreateWindow(Width, Height, WindowName.c_str(), NULL, NULL);
-    mWindow = window;
+    GLFWwindow* window = glfwCreateWindow(SceneManager->Width, SceneManager->Height, SceneManager->WindowName.c_str(), NULL, NULL);
+    SceneManager->mWindow = window;
 
-    if (mWindow == nullptr)
+    if (SceneManager->mWindow == nullptr)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return;
     }
     // Set the window as the main context of the current thread
-    glfwMakeContextCurrent(mWindow);
+    glfwMakeContextCurrent(SceneManager->mWindow);
 
     // Initialize GLAD as it manages opengl function pointers
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -41,12 +45,12 @@ void SceneManager::Initialise(const int pWidth, const int pHeight, Scene* pStart
     }
 
     // Set viewport dimensions
-    glViewport(0, 0, Width, Height);
+    glViewport(0, 0, SceneManager->Width, SceneManager->Height);
 
     // Callbacks
-    glfwSetFramebufferSizeCallback(mWindow, FrameBufferSizeCallback);
-    glfwSetKeyCallback(mWindow, KeyboardKeyCallback);
-    glfwSetCursorPosCallback(mWindow, CursorPositionCallback);
+    glfwSetFramebufferSizeCallback(SceneManager->mWindow, FrameBufferSizeCallback);
+    glfwSetKeyCallback(SceneManager->mWindow, KeyboardKeyCallback);
+    glfwSetCursorPosCallback( SceneManager->mWindow, CursorPositionCallback);
 
     // Init initial main menu scene
     ChangeScene(pStartScene);
@@ -54,7 +58,9 @@ void SceneManager::Initialise(const int pWidth, const int pHeight, Scene* pStart
 
 void SceneManager::Run()
 {
-    if (mCurrentScene == nullptr)
+    SceneManager* SceneManager = GetInstance();
+
+    if (SceneManager->mCurrentScene == nullptr)
     {
         std::cout << "Current scene is NULL" << std::endl;
         return;
@@ -62,11 +68,11 @@ void SceneManager::Run()
 
     float lastTime = static_cast<float>(glfwGetTime());
 
-    while (!glfwWindowShouldClose(mWindow))
+    while (!glfwWindowShouldClose(SceneManager->mWindow))
     {
         // Delta Time
         float now = static_cast<float>(glfwGetTime());
-        DeltaTime = now - lastTime;
+        SceneManager->DeltaTime = now - lastTime;
         lastTime = now;
 
         // Enable Depth Test
@@ -77,19 +83,19 @@ void SceneManager::Run()
         glClear(GL_COLOR_BUFFER_BIT);
         glClear(GL_DEPTH_BUFFER_BIT);
 
-        mCurrentScene->Update();
+        SceneManager->mCurrentScene->Update();
 
-        mCurrentScene->Render();
+        SceneManager->mCurrentScene->Render();
 
-        glfwSwapBuffers(mWindow);
+        glfwSwapBuffers(SceneManager->mWindow);
         glfwPollEvents();
     }
 
     ResourceManager::DeleteResources();
     SpriteManager::ClearSpriteGeometry();
 
-    delete mCurrentScene;
-    mCurrentScene = nullptr;
+    delete SceneManager->mCurrentScene;
+    SceneManager->mCurrentScene = nullptr;
 
     ResourceManager::KillInstance();
     SpriteManager::KillInstance();
@@ -97,20 +103,48 @@ void SceneManager::Run()
 
 void SceneManager::ChangeScene(Scene* pNewScene)
 {
+    SceneManager* SceneManager = GetInstance();
+
     // Close current scene
-    if (mCurrentScene != NULL)
+    if (SceneManager->mCurrentScene != NULL)
     {
-        CloseCurrentScene();
-        delete mCurrentScene;
-        mCurrentScene = nullptr;
+        SceneManager->CloseCurrentScene();
+        delete SceneManager->mCurrentScene;
+        SceneManager->mCurrentScene = nullptr;
     }
 
-    mCurrentScene = pNewScene;
+    SceneManager->mCurrentScene = pNewScene;
 
     // Load new scene
-    LoadCurrentScene();
+    SceneManager->LoadCurrentScene();
 
-    glfwSetWindowTitle(mWindow, WindowName.c_str());
+    glfwSetWindowTitle(SceneManager->mWindow, SceneManager->WindowName.c_str());
+}
+
+SceneManager::SceneManager()
+{
+}
+
+SceneManager::~SceneManager()
+{
+}
+
+SceneManager* SceneManager::GetInstance()
+{
+    if (mInstance == nullptr)
+    {
+        mInstance = new SceneManager();
+    }
+
+    return mInstance;
+}
+
+void SceneManager::KillInstance()
+{
+    if (mInstance != nullptr)
+    {
+        delete mInstance;
+    }
 }
 
 void SceneManager::RenderCurrentScene()
@@ -136,20 +170,25 @@ void SceneManager::CloseCurrentScene()
 
 void SceneManager::CursorPositionCallback(GLFWwindow* pWindow, double pXPos, double pYPos)
 {
-    mCurrentScene->ProcessMouseInput(pWindow, pXPos, pYPos);
+    SceneManager* SceneManager = GetInstance();
+    SceneManager->mCurrentScene->ProcessMouseInput(pWindow, pXPos, pYPos);
 }
 
 void SceneManager::KeyboardKeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods)
 {
+    SceneManager* SceneManager = GetInstance();
+
 	if (pKey == GLFW_KEY_ESCAPE && pAction == GLFW_PRESS)
 		glfwSetWindowShouldClose(pWindow, true);
 
-    mCurrentScene->ProcessKeyboardInput(pWindow, pKey, pScancode, pAction, pMods);
+    SceneManager->mCurrentScene->ProcessKeyboardInput(pWindow, pKey, pScancode, pAction, pMods);
 }
 
 void SceneManager::FrameBufferSizeCallback(GLFWwindow* pWindow, int pWidth, int pHeight)
 {
-    Width = pWidth;
-    Height = pHeight;
+    SceneManager* SceneManager = GetInstance();
+
+    SceneManager->Width = pWidth;
+    SceneManager->Height = pHeight;
 	glViewport(0, 0, pWidth, pHeight);
 }

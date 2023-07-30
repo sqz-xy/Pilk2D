@@ -4,6 +4,8 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 
+class SceneManager;
+
 enum CameraActions
 {
 	UP,
@@ -38,4 +40,7 @@ public:
 	void MoveCamera(const CameraActions pAction, const float pDistance);
 	void ResetZoom();
 	void UpdateCamera();
+
+private:
+	SceneManager* mSceneManagerInstance;
 };

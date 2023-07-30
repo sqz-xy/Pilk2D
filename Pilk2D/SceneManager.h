@@ -13,26 +13,30 @@ public:
 	static void Run();
 	static void ChangeScene(Scene* pNewScene);
 
+	static SceneManager* GetInstance();
+	static void KillInstance();
+
 	// Static game variables, across the program
-	inline static int Width;
-	inline static int Height;
-	inline static std::string WindowName;
-	inline static float DeltaTime;
+	int Width = 0;
+	int Height = 0;
+	std::string WindowName = "";
+	float DeltaTime = 0.0f;
 
-private:
-	SceneManager() = delete;
-	~SceneManager() = delete;
+protected:
+	SceneManager();
+	~SceneManager();
 
-	static void RenderCurrentScene();
-	static void UpdateCurrentScene();
-	static void LoadCurrentScene();
-	static void CloseCurrentScene();
+	static SceneManager* mInstance;
+
+	void RenderCurrentScene();
+	void UpdateCurrentScene();
+	void LoadCurrentScene();
+	void CloseCurrentScene();
 
 	static void CursorPositionCallback(GLFWwindow* pWindow, double pXPos, double pYPos);
 	static void KeyboardKeyCallback(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods);
 	static void FrameBufferSizeCallback(GLFWwindow* pWindow, int pWidth, int pHeight);
 
-	inline static Scene* mCurrentScene;
-
-	inline static GLFWwindow* mWindow;
+	Scene* mCurrentScene = nullptr;
+	GLFWwindow* mWindow = nullptr;
 };
