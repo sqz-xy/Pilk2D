@@ -44,6 +44,7 @@ TestScene::~TestScene()
 
 void TestScene::Load() 
 {
+	/*
 	sysman->AddSystem(sysrender);
 
 	Entity* e = new Entity("randy");
@@ -59,6 +60,7 @@ void TestScene::Load()
 	entitymanager->AddEntity(e);
 
 	SpriteManager::InitSpriteGeometry();
+	*/
 }
 
 void TestScene::Render() const
