@@ -7,9 +7,15 @@
 #include <vector>
 #include <stb_image.h>
 
-// Maps
-std::map<std::string, unsigned int> ResourceManager::mShaderMap;
-std::map<std::string, unsigned int> ResourceManager::mTextureMap;
+ResourceManager* ResourceManager::mInstance = nullptr;
+
+ResourceManager::ResourceManager()
+{
+}
+
+ResourceManager::~ResourceManager()
+{
+}
 
 /// Original Author: Thomas Beet
 /// <summary>
@@ -71,6 +77,24 @@ bool ResourceManager::CompileShader(const GLenum& pShaderType, const std::string
 	return true;
 }
 
+ResourceManager* ResourceManager::GetInstance()
+{
+	if (mInstance == nullptr)
+	{
+		mInstance = new ResourceManager();
+	}
+
+	return mInstance;
+}
+
+void ResourceManager::KillInstance()
+{
+	if (mInstance != nullptr)
+	{
+		delete mInstance;
+	}
+}
+
 /// Original Author: Thomas Beet
 /// <summary>
 /// Creates a shader program using the passed in shader paths
@@ -81,6 +105,8 @@ bool ResourceManager::CompileShader(const GLenum& pShaderType, const std::string
 /// <returns></returns>
 bool ResourceManager::CreateShaderProgram(unsigned int* pProgramHandle, const std::string& pVertFileName, const std::string& pFragFileName)
 {
+	ResourceManager* ResourceManager = GetInstance();
+
 	// Shader signature is the vertex + fragment filenames appended
 	// Preallocate buffer to store shader signature
 
@@ -91,10 +117,10 @@ bool ResourceManager::CreateShaderProgram(unsigned int* pProgramHandle, const st
 	strcat_s(shaderSig, returnBufferSize, pFragFileName.c_str());
 	
 	// If the shader already exists, return its program id
-	const std::size_t shaderCount = mShaderMap.count(shaderSig), shaderLimit = 1;
+	const std::size_t shaderCount = ResourceManager->mShaderMap.count(shaderSig), shaderLimit = 1;
 	if (shaderCount == shaderLimit)
 	{
-		*pProgramHandle = mShaderMap.at(shaderSig);
+		*pProgramHandle = ResourceManager->mShaderMap.at(shaderSig);
 		return true;
 	}
 
@@ -104,8 +130,8 @@ bool ResourceManager::CreateShaderProgram(unsigned int* pProgramHandle, const st
 	unsigned int vertexShader, fragmentShader;
 
 	// Compile and attach shaders
-	CompileShader(GL_VERTEX_SHADER, pVertFileName.c_str(), &vertexShader, &success, infoLog);
-	CompileShader(GL_FRAGMENT_SHADER, pFragFileName.c_str(), &fragmentShader, &success, infoLog);
+	ResourceManager->CompileShader(GL_VERTEX_SHADER, pVertFileName.c_str(), &vertexShader, &success, infoLog);
+	ResourceManager->CompileShader(GL_FRAGMENT_SHADER, pFragFileName.c_str(), &fragmentShader, &success, infoLog);
 
 	*pProgramHandle = glCreateProgram();
 
@@ -122,7 +148,7 @@ bool ResourceManager::CreateShaderProgram(unsigned int* pProgramHandle, const st
 	}
 
 	// Add the shader to the map
-	mShaderMap.insert(std::pair <std::string, unsigned int > (shaderSig, *pProgramHandle));
+	ResourceManager->mShaderMap.insert(std::pair <std::string, unsigned int > (shaderSig, *pProgramHandle));
 	delete[] shaderSig;
 
 	return true;
@@ -137,10 +163,12 @@ bool ResourceManager::CreateShaderProgram(unsigned int* pProgramHandle, const st
 /// <returns>Texture buffer</returns>
 unsigned int ResourceManager::LoadTexture(const std::string& pPath)
 {
-	const std::size_t texCount = mTextureMap.count(pPath), texLimit = 1;
+	ResourceManager* ResourceManager = GetInstance();
+
+	const std::size_t texCount = ResourceManager->mTextureMap.count(pPath), texLimit = 1;
 	if (texCount == texLimit)
 	{
-		unsigned int texBuffer = mTextureMap.at(pPath);
+		unsigned int texBuffer = ResourceManager->mTextureMap.at(pPath);
 		return texBuffer;
 	}
 
@@ -179,7 +207,7 @@ unsigned int ResourceManager::LoadTexture(const std::string& pPath)
 	}
 	stbi_image_free(data);
 	
-	mShaderMap.insert(std::pair <std::string, unsigned int >(pPath, texture1));
+	ResourceManager->mShaderMap.insert(std::pair <std::string, unsigned int >(pPath, texture1));
 	return texture1;
 }
 
@@ -189,24 +217,26 @@ unsigned int ResourceManager::LoadTexture(const std::string& pPath)
 /// </summary>
 void ResourceManager::DeleteResources()
 {
-	for (const auto& shader : mShaderMap) 
+	ResourceManager* ResourceManager = GetInstance();
+
+	for (const auto& shader : ResourceManager->mShaderMap)
 	{
 		glDeleteProgram(shader.second);
 	}
-	mShaderMap.clear();
+	ResourceManager->mShaderMap.clear();
 
 	// Could be an isue
-	if (mTextureMap.size() > 0)
+	if (ResourceManager->mTextureMap.size() > 0)
 	{
 		std::vector<GLuint> texIDs;
 
-		for (const auto& texture : mTextureMap) 
+		for (const auto& texture : ResourceManager->mTextureMap)
 		{
 			texIDs.push_back(static_cast<GLuint>(texture.second));
 		}
 		glDeleteTextures(texIDs.size(), &texIDs[0]);
 
-		mTextureMap.clear();
+		ResourceManager->mTextureMap.clear();
 	}
 
 }
