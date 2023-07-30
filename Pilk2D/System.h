@@ -35,3 +35,17 @@ private:
 	Camera* mCamera;
 
 };
+
+class SystemPhysics : public System {
+public:
+
+	SystemPhysics();
+	~SystemPhysics();
+
+	void Execute(const float pDeltaTime, std::vector<Entity*> pEntities) override;
+
+private:
+
+
+	void TomSmells(Entity* pEntity, ComponentPhysics* pFizzicks);
+};

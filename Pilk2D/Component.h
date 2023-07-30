@@ -66,6 +66,10 @@ private:
 class ComponentPhysics : public Component
 {
 public:
+	ComponentPhysics();
+	~ComponentPhysics();
 
+
+	glm::vec2 mVelocity;
 private:
 };

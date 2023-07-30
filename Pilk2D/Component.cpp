@@ -69,7 +69,15 @@ void ComponentTransform::UpdateTransform() {
 
 #pragma region Component Physics
 
+ComponentPhysics::ComponentPhysics()
+{
+	mVelocity = glm::vec2(0, 0);
+}
 
+ComponentPhysics::~ComponentPhysics() 
+{
+
+}
 
 #pragma endregion
 

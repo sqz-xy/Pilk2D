@@ -48,9 +48,11 @@ void TestScene::Load()
 	ComponentTransform* randytrans = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), 1.1f);
 	ComponentSprite* randysprite = new ComponentSprite("resources/textures/capsule.jpg");
 	ComponentShader* randyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
+	ComponentPhysics* randyPhys = new ComponentPhysics();
 	e->AddComponent(randytrans);
 	e->AddComponent(randysprite);
 	e->AddComponent(randyshader);
+	e->AddComponent(randyPhys);
 
 	entitymanager->AddEntity(e);
 
