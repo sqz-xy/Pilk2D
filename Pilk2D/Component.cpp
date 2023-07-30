@@ -67,6 +67,20 @@ void ComponentTransform::UpdateTransform() {
 
 #pragma endregion
 
+#pragma region Component Physics
+
+ComponentPhysics::ComponentPhysics()
+{
+	mVelocity = glm::vec2(0, 0);
+}
+
+ComponentPhysics::~ComponentPhysics() 
+{
+
+}
+
+#pragma endregion
+
 #pragma region ComponentSprite
 
 ComponentSprite::ComponentSprite(const std::string& pFilename) 

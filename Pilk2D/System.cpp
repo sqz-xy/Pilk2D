@@ -51,3 +51,31 @@ void SystemRender::Render(ComponentSprite* pSprite, ComponentTransform* pTrans, 
 }
 
 #pragma endregion
+
+#pragma region SystemPhysics
+
+SystemPhysics::SystemPhysics()
+{
+
+}
+
+SystemPhysics::~SystemPhysics()
+{
+
+}
+
+void SystemPhysics::Execute(const float pDeltaTime, std::vector<Entity*> pEntities)
+{
+	for (Entity* e : pEntities)
+	{
+
+	}
+}
+
+
+void SystemPhysics::TomSmells(Entity* pEntity, ComponentPhysics* pPhys)
+{
+
+}
+
+#pragma endregion

@@ -47,12 +47,14 @@ void TestScene::Load()
 	sysman->AddSystem(sysrender);
 
 	Entity* e = new Entity("randy");
-	ComponentTransform* randytrans = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(1.0f, 0.5f), 1.1f);
+	ComponentTransform* randytrans = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), 1.1f);
 	ComponentSprite* randysprite = new ComponentSprite("resources/textures/capsule.jpg");
 	ComponentShader* randyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
+	ComponentPhysics* randyPhys = new ComponentPhysics();
 	e->AddComponent(randytrans);
 	e->AddComponent(randysprite);
 	e->AddComponent(randyshader);
+	e->AddComponent(randyPhys);
 
 	entitymanager->AddEntity(e);
 
@@ -61,13 +63,7 @@ void TestScene::Load()
 
 void TestScene::Render() const
 {
-	//sprite1->UseSprite();
-	//shader1->UseShader(mCamera, trans1->mTransform);
-	//SpriteManager::DrawSpriteGeometry();
 
-	//sprite2->UseSprite();
-	//shader2->UseShader(mCamera, trans2->mTransform);
-	//SpriteManager::DrawSpriteGeometry();
 }
 
 void TestScene::Update() 
@@ -91,22 +87,22 @@ void TestScene::ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancod
 		SceneManager::ChangeScene(newScene);
 	}
 
-	if (pKey == GLFW_KEY_D && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
+	if (pKey == GLFW_KEY_RIGHT && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 	{
 		mCamera.MoveCamera(RIGHT, 1.0f);
 	}
 
-	if (pKey == GLFW_KEY_A && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
+	if (pKey == GLFW_KEY_LEFT && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 	{
 		mCamera.MoveCamera(LEFT, 1.0f);
 	}
 
-	if (pKey == GLFW_KEY_W && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
+	if (pKey == GLFW_KEY_UP && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 	{
 		mCamera.MoveCamera(UP, 1.0f);
 	}
 
-	if (pKey == GLFW_KEY_S && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
+	if (pKey == GLFW_KEY_DOWN && (pAction == GLFW_REPEAT || pAction == GLFW_PRESS))
 	{
 		mCamera.MoveCamera(DOWN, 1.0f);
 	}
