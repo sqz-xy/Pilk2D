@@ -99,6 +99,8 @@ void SceneManager::Run()
 
     ResourceManager::KillInstance();
     SpriteManager::KillInstance();
+
+    glfwTerminate();
 }
 
 void SceneManager::ChangeScene(Scene* pNewScene)

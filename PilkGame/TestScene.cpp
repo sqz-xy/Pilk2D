@@ -47,6 +47,7 @@ TestScene::~TestScene()
 
 void TestScene::Load() 
 {
+	/*
 	sysman->AddSystem(sysrender);
 	sysman->AddSystem(sysphys);
 
@@ -63,6 +64,7 @@ void TestScene::Load()
 	entitymanager->AddEntity(e);
 
 	SpriteManager::InitSpriteGeometry();
+	*/
 }
 
 void TestScene::Render() const
