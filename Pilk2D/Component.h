@@ -62,3 +62,10 @@ public:
 private:
 	unsigned int mShaderHandle;
 };
+
+class ComponentPhysics : public Component
+{
+public:
+
+private:
+};

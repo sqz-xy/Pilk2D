@@ -67,6 +67,12 @@ void ComponentTransform::UpdateTransform() {
 
 #pragma endregion
 
+#pragma region Component Physics
+
+
+
+#pragma endregion
+
 #pragma region ComponentSprite
 
 ComponentSprite::ComponentSprite(const std::string& pFilename) 
