@@ -47,7 +47,7 @@ TestScene::~TestScene()
 
 void TestScene::Load() 
 {
-	/*
+	
 	sysman->AddSystem(sysrender);
 	sysman->AddSystem(sysphys);
 
@@ -64,7 +64,7 @@ void TestScene::Load()
 	entitymanager->AddEntity(e);
 
 	SpriteManager::InitSpriteGeometry();
-	*/
+	
 }
 
 void TestScene::Render() const
@@ -87,30 +87,30 @@ void TestScene::Close()
 
 void TestScene::ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods) 
 {
-	if (pKey == GLFW_KEY_W && pAction == GLFW_PRESS)
+	if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		playerphys->mVelocity.y = 1.0;
+		playerphys->mVelocity.y = 1.0f;
 	}
-	else if (pKey == GLFW_KEY_S && pAction == GLFW_PRESS)
+	else if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		playerphys->mVelocity.y = -1.0;
+		playerphys->mVelocity.y = -1.0f;
 	}
 	else
 	{
-		playerphys->mVelocity.y = 0.0;
+		playerphys->mVelocity.y = 0.0f;
 	}
 
-	if (pKey == GLFW_KEY_A && pAction == GLFW_PRESS)
+	if (glfwGetKey(pWindow, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		playerphys->mVelocity.x = -1.0;
+		playerphys->mVelocity.x = -1.0f;
 	}
-	else if (pKey == GLFW_KEY_D && pAction == GLFW_PRESS)
+	else if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		playerphys->mVelocity.x = 1.0;
+		playerphys->mVelocity.x = 1.0f;
 	}
 	else
 	{
-		playerphys->mVelocity.x = 0.0;
+		playerphys->mVelocity.x = 0.0f;
 	}
 
 # pragma region cameraControloids
