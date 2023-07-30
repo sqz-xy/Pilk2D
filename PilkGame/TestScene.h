@@ -27,6 +27,11 @@ public:
 	virtual void Load() override;
 
 	/// <summary>
+	/// GUI Logic
+	/// </summary>
+	virtual void RenderGUI() override;
+
+	/// <summary>
 	/// Keyboard Input Processing
 	/// </summary>
 	virtual void ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods) override;

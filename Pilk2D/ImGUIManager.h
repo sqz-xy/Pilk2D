@@ -1,4 +1,7 @@
 #pragma once
+
+struct ImGuiIO;
+
 class ImGUIManager final
 {
 public:
@@ -7,6 +10,10 @@ public:
 
 	static ImGUIManager* GetInstance();
 	static void KillInstance();
+	static void StartFrame();
+	static void EndFrame();
+
+	ImGuiIO* mIO = nullptr;
 
 protected:
 	ImGUIManager();

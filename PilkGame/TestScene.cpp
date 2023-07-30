@@ -1,5 +1,6 @@
 #include <SceneManager.h>
 #include <ResourceManager.h>
+#include <ImGUIManager.h>
 
 #include "TestScene.h"
 
@@ -11,6 +12,7 @@
 #include <SpriteManager.h>
 #include <Entity.h>
 #include <System.h>
+#include <imgui.h>
 
 // TEMP VARS ----------------------------------
 
@@ -34,6 +36,8 @@ SystemRender* sysrender = new SystemRender(&mCamera);
 SystemPhysics* sysphys = new SystemPhysics();
 
 ComponentPhysics* playerphys;
+
+ImGUIManager* ImGUIManager;
 
 TestScene::TestScene() : Scene()
 {
@@ -79,9 +83,19 @@ void TestScene::Update()
 	sysman->ExecuteSystems(entitymanager->mEntities);
 }
 
+void TestScene::RenderGUI()
+{
+	ImGUIManager->StartFrame();
+
+	ImGui::Begin("ImGui Test");
+	ImGui::Text("Goo goo ga ga");
+	ImGui::End();
+
+	ImGUIManager->EndFrame();
+}
+
 void TestScene::Close() 
 {
-
 
 }
 
