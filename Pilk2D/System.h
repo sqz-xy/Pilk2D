@@ -47,5 +47,5 @@ public:
 private:
 
 
-	void TomSmells(Entity* pEntity, ComponentPhysics* pFizzicks);
+	void TomSmells(ComponentPhysics* pFizzicks, ComponentTransform* pTrans, const float pdeltoid);
 };

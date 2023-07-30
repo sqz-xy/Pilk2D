@@ -68,14 +68,21 @@ void SystemPhysics::Execute(const float pDeltaTime, std::vector<Entity*> pEntiti
 {
 	for (Entity* e : pEntities)
 	{
+		ComponentPhysics* phys = e->GetComponent<ComponentPhysics>();
+		ComponentTransform* trans = e->GetComponent<ComponentTransform>();
 
+		if (phys != nullptr && trans != nullptr)
+		{
+			TomSmells(phys, trans, pDeltaTime);
+		}
 	}
 }
 
 
-void SystemPhysics::TomSmells(Entity* pEntity, ComponentPhysics* pPhys)
+void SystemPhysics::TomSmells(ComponentPhysics* pPhys, ComponentTransform* pTrans, const float pDelta)
 {
 
+	pTrans->UpdateTranslation(pTrans->mTranslation + (pPhys->mVelocity * pDelta));
 }
 
 #pragma endregion

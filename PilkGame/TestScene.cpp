@@ -31,10 +31,11 @@ SystemManager* sysman = new SystemManager();
 EntityManager* entitymanager = new EntityManager();
 
 SystemRender* sysrender = new SystemRender(&mCamera);
+SystemPhysics* sysphys = new SystemPhysics();
 
 TestScene::TestScene() : Scene()
 {
-	mSceneManagerInstance->WindowName = "Test!";
+	mSceneManagerInstance->WindowName = "tom smells!";
 }
 
 TestScene::~TestScene() 
@@ -46,12 +47,14 @@ void TestScene::Load()
 {
 	/*
 	sysman->AddSystem(sysrender);
+	sysman->AddSystem(sysphys);
 
 	Entity* e = new Entity("randy");
 	ComponentTransform* randytrans = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), 1.1f);
 	ComponentSprite* randysprite = new ComponentSprite("resources/textures/capsule.jpg");
 	ComponentShader* randyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
 	ComponentPhysics* randyPhys = new ComponentPhysics();
+	randyPhys->mVelocity = glm::vec2(0.1, 0);
 	e->AddComponent(randytrans);
 	e->AddComponent(randysprite);
 	e->AddComponent(randyshader);
