@@ -10,7 +10,7 @@ static unsigned int ENTITY_ID = 0;
 class Entity
 {
 public:
-	Entity(const std::string& pName);
+	Entity(const std::string pName);
 	Entity(const Entity& pEntity);
 	~Entity();
 
@@ -22,7 +22,7 @@ public:
 	Entity& operator= (const class Entity&) = default;
 
 private:
-	const std::string& mName;
+	const std::string mName;
 	const unsigned int mID;
 	std::vector<Component*> mComponents; // Heap Allocation for components
 };

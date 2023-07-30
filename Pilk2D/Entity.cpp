@@ -1,7 +1,7 @@
 #include "Entity.h"
 #include "Component.h"
 
-Entity::Entity(const std::string& pName) : mName(pName), mID(ENTITY_ID++)
+Entity::Entity(const std::string pName) : mName(pName), mID(ENTITY_ID++)
 {
 
 }
