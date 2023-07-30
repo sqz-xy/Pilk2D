@@ -156,6 +156,9 @@ void SceneManager::RenderCurrentScene()
 
 void SceneManager::UpdateCurrentScene()
 {
+    SceneManager* SceneManager = GetInstance();
+    // Temp
+    SceneManager->mCurrentScene->ProcessKeyboardInput(SceneManager->mWindow, -1, -1, -1, -1);
     mCurrentScene->Update();
 }
 
