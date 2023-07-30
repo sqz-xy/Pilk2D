@@ -33,6 +33,8 @@ EntityManager* entitymanager = new EntityManager();
 SystemRender* sysrender = new SystemRender(&mCamera);
 SystemPhysics* sysphys = new SystemPhysics();
 
+ComponentPhysics* playerphys;
+
 TestScene::TestScene() : Scene()
 {
 	mSceneManagerInstance->WindowName = "tom smells!";
@@ -52,12 +54,11 @@ void TestScene::Load()
 	ComponentTransform* randytrans = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), 1.1f);
 	ComponentSprite* randysprite = new ComponentSprite("resources/textures/capsule.jpg");
 	ComponentShader* randyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
-	ComponentPhysics* randyPhys = new ComponentPhysics();
-	randyPhys->mVelocity = glm::vec2(0.1, 0);
+	playerphys = new ComponentPhysics();
 	e->AddComponent(randytrans);
 	e->AddComponent(randysprite);
 	e->AddComponent(randyshader);
-	e->AddComponent(randyPhys);
+	e->AddComponent(playerphys);
 
 	entitymanager->AddEntity(e);
 
@@ -84,6 +85,33 @@ void TestScene::Close()
 
 void TestScene::ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods) 
 {
+	if (pKey == GLFW_KEY_W && pAction == GLFW_PRESS)
+	{
+		playerphys->mVelocity.y = 1.0;
+	}
+	else if (pKey == GLFW_KEY_S && pAction == GLFW_PRESS)
+	{
+		playerphys->mVelocity.y = -1.0;
+	}
+	else
+	{
+		playerphys->mVelocity.y = 0.0;
+	}
+
+	if (pKey == GLFW_KEY_A && pAction == GLFW_PRESS)
+	{
+		playerphys->mVelocity.x = -1.0;
+	}
+	else if (pKey == GLFW_KEY_D && pAction == GLFW_PRESS)
+	{
+		playerphys->mVelocity.x = 1.0;
+	}
+	else
+	{
+		playerphys->mVelocity.x = 0.0;
+	}
+
+# pragma region cameraControloids
 	if (pKey == GLFW_KEY_G && pAction == GLFW_PRESS)
 	{
 		Scene* newScene = new TestScene();
@@ -124,6 +152,8 @@ void TestScene::ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancod
 	{
 		mCamera.ResetZoom();
 	}
+
+#pragma endregion
 }
 
 void TestScene::ProcessMouseInput(GLFWwindow* pWindow, double pXPos, double pYPos) 
