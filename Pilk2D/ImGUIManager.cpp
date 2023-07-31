@@ -47,7 +47,7 @@ void ImGUIManager::KillInstance()
 	}
 }
 
-void ImGUIManager::StartFrame(std::string& pName)
+void ImGUIManager::StartFrame()
 {
 	// Ensures initialisation has occured
 	GetInstance();
@@ -55,7 +55,6 @@ void ImGUIManager::StartFrame(std::string& pName)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	ImGui::Begin(pName.c_str());
 }
 
 void ImGUIManager::EndFrame()
@@ -63,7 +62,6 @@ void ImGUIManager::EndFrame()
 	// Ensures initialisation has occured
 	GetInstance();
 
-	ImGui::End();
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

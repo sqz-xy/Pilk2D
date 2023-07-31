@@ -73,19 +73,11 @@ void TestScene::Update()
 
 void TestScene::RenderGUI()
 {
-	std::string name = "ImGui Test";
-	/*
-	GUIManager->StartFrame(name);
+	GUIManager->StartFrame();
 
-	
-	ImGui::Text("Goo goo ga ga");
-
-	ImGui::BeginMainMenuBar();
-	ImGui::Button("he he ha ha");
-	ImGui::EndMainMenuBar();
+	ImGui::ShowDemoWindow();
 
 	GUIManager->EndFrame();
-	*/
 }
 
 void TestScene::Close() 

@@ -12,7 +12,7 @@ public:
 
 	static ImGUIManager* GetInstance();
 	static void KillInstance();
-	static void StartFrame(std::string& pName);
+	static void StartFrame();
 	static void EndFrame();
 
 	ImGuiIO* mIO = nullptr;
