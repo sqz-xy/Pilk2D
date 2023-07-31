@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 struct ImGuiIO;
 
 class ImGUIManager final
@@ -10,7 +12,7 @@ public:
 
 	static ImGUIManager* GetInstance();
 	static void KillInstance();
-	static void StartFrame();
+	static void StartFrame(std::string& pName);
 	static void EndFrame();
 
 	ImGuiIO* mIO = nullptr;
