@@ -42,4 +42,5 @@ public:
 	virtual void ProcessMouseInput(GLFWwindow* pWindow, double pXPos, double pYPos) override;
 
 	bool operator==(const TestScene& other) const = default;
+
 };
