@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Camera.h"
-#include "Entity.h"
 #include "Component.h"
 #include "vector"
+
+class Camera;
+class Entity;
 
 class System {
 
