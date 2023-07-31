@@ -30,6 +30,9 @@ void SystemManager::AddSystem(System* pSystem)
 }
 
 void SystemManager::ClearSystems() 
-{
+{	
+	for (auto* system : mSystems)
+		delete system;
+
 	mSystems.clear();
 }

@@ -51,7 +51,6 @@ TestScene::~TestScene()
 
 void TestScene::Load() 
 {
-	
 	sysman->AddSystem(sysrender);
 	sysman->AddSystem(sysphys);
 
@@ -98,7 +97,11 @@ void TestScene::RenderGUI()
 
 void TestScene::Close() 
 {
+	entitymanager->ClearEntities();
+	sysman->ClearSystems();
 
+	delete entitymanager;
+	delete sysman;
 }
 
 void TestScene::ProcessKeyboardInput(GLFWwindow* pWindow, int pKey, int pScancode, int pAction, int pMods) 

@@ -17,6 +17,11 @@ void Entity::AddComponent(Component* pComponent) {
 
 Entity::~Entity()
 {
-	//for (Component* component : mComponents)
-	// TODO: Delete Components	
+	for (Component* component : mComponents)
+	{
+		delete component;
+		component = nullptr;
+	}
+
+	mComponents.clear();
 }
