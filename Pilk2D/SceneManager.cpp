@@ -66,6 +66,8 @@ void SceneManager::Run()
 
     float lastTime = static_cast<float>(glfwGetTime());
 
+    SpriteManager::InitSpriteGeometry();
+
     while (!glfwWindowShouldClose(SceneManager->Window))
     {
         glfwPollEvents();

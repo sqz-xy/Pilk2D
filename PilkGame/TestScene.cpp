@@ -66,9 +66,6 @@ void TestScene::Load()
 	e->AddComponent(playerphys);
 
 	entitymanager->AddEntity(e);
-
-	SpriteManager::InitSpriteGeometry();
-	
 }
 
 void TestScene::Render() const
