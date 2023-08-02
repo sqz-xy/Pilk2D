@@ -46,6 +46,16 @@ void TestScene::Load()
 	sysman->AddSystem(sysrender);
 	sysman->AddSystem(sysphys);
 
+	Entity* enemy = new Entity("badrandy");
+#pragma region enemy
+	ComponentTransform* badrandytrans = new ComponentTransform(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), 1.0f);
+	ComponentSprite* badrandysprite = new ComponentSprite("resources/textures/capsule.jpg");
+	ComponentShader* badrandyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
+	enemy->AddComponent(badrandytrans);
+	enemy->AddComponent(badrandysprite);
+	enemy->AddComponent(badrandyshader);
+#pragma endregion
+
 	Entity* e = new Entity("randy");
 	ComponentTransform* randytrans = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), 1.1f);
 	ComponentSprite* randysprite = new ComponentSprite("resources/textures/capsule.jpg");
@@ -57,6 +67,7 @@ void TestScene::Load()
 	e->AddComponent(playerphys);
 
 	entitymanager->AddEntity(e);
+	entitymanager->AddEntity(enemy);
 }
 
 void TestScene::Render() const
