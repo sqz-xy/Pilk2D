@@ -76,3 +76,15 @@ public:
 	glm::vec2 mVelocity;
 private:
 };
+
+class ComponentCollisionAABB : public Component
+{
+public:
+	ComponentCollisionAABB(float pWidth, float pHeight);
+	~ComponentCollisionAABB();
+
+	float mWidth;
+	float mHeight;
+private:
+
+};

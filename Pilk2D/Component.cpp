@@ -141,3 +141,18 @@ inline unsigned int ComponentShader::GetHandle()
 
 #pragma endregion
 
+#pragma region ComponentCollisionAABB
+
+ComponentCollisionAABB::ComponentCollisionAABB(float pWidth, float pHeight)
+{
+	mWidth = pWidth;
+	mHeight = pHeight;
+}
+
+ComponentCollisionAABB::~ComponentCollisionAABB()
+{
+
+}
+
+#pragma endregion
+
