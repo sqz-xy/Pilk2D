@@ -188,8 +188,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\PilkGame\resources\shaders\FragmentShader.frag" />
+    <None Include="..\PilkGame\resources\shaders\SpriteSheet.frag" />
     <None Include="..\PilkGame\resources\shaders\VertexShader.vert" />
-    <None Include="SpriteSheet.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

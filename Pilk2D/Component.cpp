@@ -125,6 +125,12 @@ void ComponentShader::UseShader(const Camera& pCamera, glm::mat4 pTransform)
 	glUniformMatrix4fv(glGetUniformLocation(mShaderHandle, "uView"), 1, GL_FALSE, &(pCamera.mView)[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(mShaderHandle, "uProjection"), 1, GL_FALSE, &(pCamera.mProjection)[0][0]);
 
+	// TEMP SOLUTION FOR PROOF OF CONCEPT
+	glUniform1i(glGetUniformLocation(mShaderHandle, "uPanelIndex"), static_cast<GLfloat>(index++));
+
+	if (index == 6)
+		index = 0;
+
 	glUniform1f(glGetUniformLocation(mShaderHandle, "uTime"), static_cast<GLfloat>(glfwGetTime()));
 }
 
@@ -132,7 +138,6 @@ inline unsigned int ComponentShader::GetHandle()
 {
 	return mShaderHandle;
 }
-
 
 #pragma endregion
 

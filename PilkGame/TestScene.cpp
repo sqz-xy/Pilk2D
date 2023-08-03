@@ -59,7 +59,7 @@ void TestScene::Load()
 	Entity* e = new Entity("randy");
 	ComponentTransform* randytrans = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), 1.1f);
 	ComponentSprite* randysprite = new ComponentSprite("resources/textures/sprite_sheet.png");
-	ComponentShader* randyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
+	ComponentShader* randyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/SpriteSheet.frag");
 	playerphys = new ComponentPhysics();
 	e->AddComponent(randytrans);
 	e->AddComponent(randysprite);

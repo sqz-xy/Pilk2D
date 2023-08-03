@@ -154,7 +154,7 @@
     <None Include="..\PilkGame\resources\shaders\VertexShader.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="SpriteSheet.frag">
+    <None Include="..\PilkGame\resources\shaders\SpriteSheet.frag">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -61,6 +61,9 @@ public:
 
 private:
 	unsigned int mShaderHandle;
+
+	// TEMP SOLUTION FOR PROOF OF CONCEPT
+	int index = 0;
 };
 
 class ComponentPhysics : public Component
