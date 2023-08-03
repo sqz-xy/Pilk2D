@@ -187,8 +187,9 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\shaders\FragmentShader.frag" />
-    <None Include="resources\shaders\VertexShader.vert" />
+    <None Include="..\PilkGame\resources\shaders\FragmentShader.frag" />
+    <None Include="..\PilkGame\resources\shaders\VertexShader.vert" />
+    <None Include="SpriteSheet.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

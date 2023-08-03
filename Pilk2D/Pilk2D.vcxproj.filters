@@ -148,10 +148,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\shaders\FragmentShader.frag">
+    <None Include="..\PilkGame\resources\shaders\FragmentShader.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="resources\shaders\VertexShader.vert">
+    <None Include="..\PilkGame\resources\shaders\VertexShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="SpriteSheet.frag">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
