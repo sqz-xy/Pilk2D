@@ -51,19 +51,23 @@ void TestScene::Load()
 	ComponentTransform* badrandytrans = new ComponentTransform(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), 1.0f);
 	ComponentSprite* badrandysprite = new ComponentSprite("resources/textures/capsule.jpg");
 	ComponentShader* badrandyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
+	ComponentCollisionAABB* badrandycol = new ComponentCollisionAABB(0.5f, 0.5f);
 	enemy->AddComponent(badrandytrans);
 	enemy->AddComponent(badrandysprite);
 	enemy->AddComponent(badrandyshader);
+	enemy->AddComponent(badrandycol);
 #pragma endregion
 
 	Entity* e = new Entity("randy");
 	ComponentTransform* randytrans = new ComponentTransform(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), 1.1f);
 	ComponentSprite* randysprite = new ComponentSprite("resources/textures/sprite_sheet.png");
 	ComponentShader* randyshader = new ComponentShader("resources/shaders/VertexShader.vert", "resources/shaders/FragmentShader.frag");
+	ComponentCollisionAABB* randycol = new ComponentCollisionAABB(0.5f, 0.5f);
 	playerphys = new ComponentPhysics();
 	e->AddComponent(randytrans);
 	e->AddComponent(randysprite);
 	e->AddComponent(randyshader);
+	e->AddComponent(randycol);
 	e->AddComponent(playerphys);
 
 	entitymanager->AddEntity(e);

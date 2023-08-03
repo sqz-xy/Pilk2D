@@ -50,3 +50,10 @@ private:
 
 	void TomSmells(ComponentPhysics* pFizzicks, ComponentTransform* pTrans, const float pdeltoid);
 };
+
+class SystemCollisionAABB : public System {
+public:
+
+private:
+
+};
