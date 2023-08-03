@@ -15,7 +15,7 @@ Component::~Component() {}
 
 #pragma region ComponentTransform
 
-ComponentTransform::ComponentTransform(glm::vec2 pTranslation, float pAngle, glm::vec2 pScale, int pLayer) {
+ComponentTransform::ComponentTransform(glm::vec2 pTranslation, float pAngle, glm::vec2 pScale, float pLayer) {
 
 	mTranslation = pTranslation;
 	mAngle = pAngle;
@@ -125,7 +125,7 @@ void ComponentShader::UseShader(const Camera& pCamera, glm::mat4 pTransform)
 	glUniformMatrix4fv(glGetUniformLocation(mShaderHandle, "uView"), 1, GL_FALSE, &(pCamera.mView)[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(mShaderHandle, "uProjection"), 1, GL_FALSE, &(pCamera.mProjection)[0][0]);
 
-	glUniform1f(glGetUniformLocation(mShaderHandle, "uTime"), glfwGetTime());
+	glUniform1f(glGetUniformLocation(mShaderHandle, "uTime"), static_cast<GLfloat>(glfwGetTime()));
 }
 
 inline unsigned int ComponentShader::GetHandle()

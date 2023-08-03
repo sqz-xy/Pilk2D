@@ -17,13 +17,13 @@ public:
 class ComponentTransform : public Component 
 {
 public:
-	ComponentTransform(glm::vec2 pTranslation, float pAngle, glm::vec2 pScale, int pLayer);
+	ComponentTransform(glm::vec2 pTranslation, float pAngle, glm::vec2 pScale, float pLayer);
 	~ComponentTransform();
 
 	glm::vec2 mTranslation;
 	float mAngle;
 	glm::vec2 mScale;
-	int mLayer;
+	float mLayer;
 	glm::mat4 mTransform;
 
 	void UpdateTranslation(glm::vec2 pTranslation);
